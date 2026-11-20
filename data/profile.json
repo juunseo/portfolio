@@ -2,9 +2,18 @@
   "name": "오준서",
   "name_en": "[작성 필요: 영문 이름]",
   "headline": "로봇·피지컬 AI 분야 AI 연구원 지망",
-  "target_roles": ["research", "robotics"],
-  "interest_roles": ["eval", "autonomy"],
-  "target_industries": ["로봇·피지컬 AI", "모빌리티·자율주행"],
+  "target_roles": [
+    "research",
+    "robotics"
+  ],
+  "interest_roles": [
+    "eval",
+    "autonomy"
+  ],
+  "target_industries": [
+    "로봇·피지컬 AI",
+    "모빌리티·자율주행"
+  ],
   "contact": {
     "email": "[작성 필요]",
     "github": "juunseo",

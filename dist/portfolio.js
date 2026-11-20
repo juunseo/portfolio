@@ -112,183 +112,7 @@ window.PORTFOLIO = {
    }
   }
  },
- "records": [
-  {
-   "id": "EDU-UNIV",
-   "type": "education",
-   "kind": "degree",
-   "status": "template",
-   "priority": 20,
-   "title": "[학교명] [전공]",
-   "org": "[학교명]",
-   "degree": "[학사 / 석사]",
-   "major": "[주전공]",
-   "minor": "[복수·부전공, 없으면 빈칸]",
-   "gpa": "[0.00 / 4.5]",
-   "period": {
-    "start": "[YYYY-MM]",
-    "end": "[YYYY-MM]",
-    "note": "[졸업 / 졸업예정 / 재학]"
-   },
-   "summary": {
-    "line": "[학교명] [전공] [학위] [졸업 구분]",
-    "short": ""
-   },
-   "courses": [
-    "[관련 이수 과목: 로보틱스, 머신러닝, 컴퓨터비전 등]"
-   ],
-   "tags": [],
-   "roles": [],
-   "todo": [
-    "학교명·전공·학위·재학 기간·학점 입력",
-    "직무 관련 이수 과목 정리"
-   ]
-  },
-  {
-   "id": "MIL-01",
-   "type": "military",
-   "status": "template",
-   "title": "[군별] [병과]",
-   "org": "[소속 부대, 공개 범위 고려해 생략 가능]",
-   "branch": "[육군 / 해군 / 공군 / 해병대 / 사회복무요원]",
-   "rank": "[최종 계급]",
-   "specialty": "[주특기·병과]",
-   "discharge": "[만기전역 / 해당 없음 / 면제]",
-   "period": {
-    "start": "[YYYY-MM]",
-    "end": "[YYYY-MM]",
-    "note": ""
-   },
-   "summary": {
-    "line": "[군별] [최종 계급] [전역 구분] ([YYYY.MM] ~ [YYYY.MM])",
-    "short": ""
-   },
-   "notes": "[직무와 이어지는 복무 경험이 있으면 한 줄. 예: 통신·장비 운용, 정비 경험]",
-   "tags": [],
-   "roles": [],
-   "todo": [
-    "병역 사항 입력. 해당 없음·면제 시 discharge에 사유 기입"
-   ]
-  },
-  {
-   "id": "AWD-01",
-   "type": "award",
-   "status": "template",
-   "title": "[대회명] [상훈]",
-   "org": "[주최·주관 기관]",
-   "rank": "[대상 / 최우수상 / 우수상 / 장려상]",
-   "period": {
-    "start": "[YYYY-MM]",
-    "end": "[YYYY-MM]",
-    "note": ""
-   },
-   "project_ref": "[관련 프로젝트 ID, 예: PRJ-01]",
-   "summary": {
-    "line": "[대회명] [상훈] ([주최 기관], [YYYY.MM])",
-    "short": "[출품작 한 줄과 본인 역할]"
-   },
-   "tags": [],
-   "roles": [],
-   "todo": [
-    "수상 내역 입력. 관련 프로젝트가 있으면 project_ref에 PRJ ID 연결"
-   ]
-  },
-  {
-   "id": "PRJ-01",
-   "type": "project",
-   "status": "template",
-   "title": "[프로젝트 이름]",
-   "subtitle": "[무엇을 만들었는지 한 줄]",
-   "org": "[과정·수업·대회명 · 팀명]",
-   "period": {
-    "start": "[YYYY-MM]",
-    "end": "[YYYY-MM]",
-    "note": ""
-   },
-   "team": {
-    "size": null,
-    "my_role": "[내 역할]"
-   },
-   "tags": [],
-   "roles": [],
-   "summary": {
-    "line": "[이력서 표 한 칸에 들어갈 한 문장]",
-    "short": "[자기소개서·요약란용 2~3문장]"
-   },
-   "problem": "[누가, 무엇 때문에, 어떤 손해를 보는지. 숫자 하나 포함]",
-   "goal": "[완료 기준]",
-   "architecture": [
-    "[구성 요소 → 구성 요소 흐름 한 줄]"
-   ],
-   "my_work": [
-    {
-     "text": "[내가 직접 한 일, 명사형 종결]",
-     "roles": []
-    }
-   ],
-   "results": [
-    {
-     "text": "[직접 잰 결과와 측정 기준]",
-     "metric": "[짧은 수치]"
-    }
-   ],
-   "troubleshooting": [
-    {
-     "title": "[문제 이름]",
-     "problem": "[증상]",
-     "cause": "[원인]",
-     "fix": "[해결]",
-     "result": "[결과]",
-     "roles": []
-    }
-   ],
-   "decisions": [
-    {
-     "choice": "[고른 기술·방법]",
-     "reason": "[다른 방법 대신 고른 근거]"
-    }
-   ],
-   "stack": [],
-   "lessons": [],
-   "next": [],
-   "links": [],
-   "evidence": [],
-   "materials": [],
-   "todo": [
-    "프로젝트 내용 검증 후 입력, 입력이 끝나면 status를 draft 또는 confirmed로 변경"
-   ]
-  },
-  {
-   "id": "RES-01",
-   "type": "research",
-   "status": "template",
-   "kind": "[학부연구생 / 논문 / 학회 발표 / 논문 재현]",
-   "title": "[연구 주제]",
-   "org": "[연구실·지도교수]",
-   "period": {
-    "start": "[YYYY-MM]",
-    "end": "[YYYY-MM]",
-    "note": ""
-   },
-   "question": "[한 학기 안에 답할 수 있는 크기의 연구 물음 한 줄]",
-   "method": "[비교 대상, 고정 조건과 바꾼 조건, 반복 횟수]",
-   "result": "[직접 잰 결과 숫자와 측정 기준]",
-   "limits": "[방법이 통하지 않은 조건]",
-   "summary": {
-    "line": "[연구 주제] ([소속], [YYYY.MM])",
-    "short": ""
-   },
-   "publication": "[학회·저널명, 저자 순서, 게재 여부]",
-   "tags": [],
-   "roles": [
-    "research"
-   ],
-   "links": [],
-   "todo": [
-    "연구 경험 입력. 없으면 논문 결과 재현 1건부터 기록"
-   ]
-  }
- ],
+ "records": [],
  "targets": [
   {
    "id": "TGT-TEMPLATE",
@@ -351,23 +175,14 @@ window.PORTFOLIO = {
    "project": 0,
    "research": 0
   },
+  "attachments": 0,
   "records": [],
   "by_type": {
-   "education": [
-    "EDU-UNIV"
-   ],
-   "military": [
-    "MIL-01"
-   ],
-   "award": [
-    "AWD-01"
-   ],
-   "project": [
-    "PRJ-01"
-   ],
-   "research": [
-    "RES-01"
-   ]
+   "education": [],
+   "military": [],
+   "award": [],
+   "project": [],
+   "research": []
   },
   "by_role": {
    "research": [],
@@ -380,13 +195,7 @@ window.PORTFOLIO = {
   "by_status": {
    "confirmed": [],
    "draft": [],
-   "template": [
-    "EDU-UNIV",
-    "MIL-01",
-    "AWD-01",
-    "PRJ-01",
-    "RES-01"
-   ]
+   "template": []
   },
   "by_year": {},
   "by_tag": {},

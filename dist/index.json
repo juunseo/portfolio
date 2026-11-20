@@ -7,23 +7,14 @@
     "project": 0,
     "research": 0
   },
+  "attachments": 0,
   "records": [],
   "by_type": {
-    "education": [
-      "EDU-UNIV"
-    ],
-    "military": [
-      "MIL-01"
-    ],
-    "award": [
-      "AWD-01"
-    ],
-    "project": [
-      "PRJ-01"
-    ],
-    "research": [
-      "RES-01"
-    ]
+    "education": [],
+    "military": [],
+    "award": [],
+    "project": [],
+    "research": []
   },
   "by_role": {
     "research": [],
@@ -36,13 +27,7 @@
   "by_status": {
     "confirmed": [],
     "draft": [],
-    "template": [
-      "EDU-UNIV",
-      "MIL-01",
-      "AWD-01",
-      "PRJ-01",
-      "RES-01"
-    ]
+    "template": []
   },
   "by_year": {},
   "by_tag": {},

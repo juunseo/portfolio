@@ -1,4 +1,25 @@
 * text=auto eol=lf
+*.bat text eol=crlf
+
+# 첨부 파일
 *.pdf binary
 *.png binary
 *.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.avif binary
+*.bmp binary
+*.mp4 binary
+*.webm binary
+*.mov binary
+*.m4v binary
+*.hwp binary
+*.hwpx binary
+*.doc binary
+*.docx binary
+*.ppt binary
+*.pptx binary
+*.xls binary
+*.xlsx binary
+*.zip binary

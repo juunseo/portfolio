@@ -9,10 +9,9 @@ private/
 /nd1_capstone_*/
 /ND3_*/
 
-# 대용량 시연 영상은 링크로 대체
-*.mp4
-*.webm
-*.mov
+# 편집 서버 임시 파일
+*.part
+data/.*.tmp
 
 # 환경
 .env
