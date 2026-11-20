@@ -1,54 +1,15 @@
 {
   "generated": "2026-11-20",
   "counts": {
-    "education": 2,
+    "education": 0,
     "military": 0,
     "award": 0,
     "project": 0,
     "research": 0
   },
-  "records": [
-    {
-      "id": "EDU-BOOTCAMP",
-      "type": "education",
-      "status": "draft",
-      "title": "피지컬 AI 나노디그리",
-      "org": "전주대학교 첨단산업인재양성부트캠프사업단",
-      "period": "",
-      "line": "전주대학교 첨단산업 인재양성 부트캠프 피지컬 AI 나노디그리 (AI 기초 45시간, ND1, ND3 이수)",
-      "tags": [
-        "ROS 2",
-        "피지컬 AI",
-        "자율주행",
-        "로봇 인지"
-      ],
-      "roles": [
-        "robotics",
-        "autonomy",
-        "research"
-      ],
-      "gaps": 2
-    },
-    {
-      "id": "EDU-CAMP-2026",
-      "type": "education",
-      "status": "draft",
-      "title": "AI 커리어 점프업 캠프",
-      "org": "전주대학교",
-      "period": "2026.11.20 ~ 2026.11.21",
-      "line": "2026 전주대학교 AI 커리어 점프업 캠프 (GitHub 정리, 프로젝트 포트폴리오 작성 실습)",
-      "tags": [
-        "포트폴리오",
-        "GitHub"
-      ],
-      "roles": [],
-      "gaps": 1
-    }
-  ],
+  "records": [],
   "by_type": {
     "education": [
-      "EDU-BOOTCAMP",
-      "EDU-CAMP-2026",
       "EDU-UNIV"
     ],
     "military": [
@@ -65,25 +26,16 @@
     ]
   },
   "by_role": {
-    "research": [
-      "EDU-BOOTCAMP"
-    ],
-    "robotics": [
-      "EDU-BOOTCAMP"
-    ],
-    "autonomy": [
-      "EDU-BOOTCAMP"
-    ],
+    "research": [],
+    "robotics": [],
+    "autonomy": [],
     "vision": [],
     "llm": [],
     "eval": []
   },
   "by_status": {
     "confirmed": [],
-    "draft": [
-      "EDU-BOOTCAMP",
-      "EDU-CAMP-2026"
-    ],
+    "draft": [],
     "template": [
       "EDU-UNIV",
       "MIL-01",
@@ -92,108 +44,8 @@
       "RES-01"
     ]
   },
-  "by_year": {
-    "2026": [
-      "EDU-CAMP-2026"
-    ]
-  },
-  "by_tag": {
-    "github": {
-      "label": "GitHub",
-      "ids": [
-        "EDU-CAMP-2026"
-      ]
-    },
-    "ros2": {
-      "label": "ROS 2",
-      "ids": [
-        "EDU-BOOTCAMP"
-      ]
-    },
-    "로봇인지": {
-      "label": "로봇 인지",
-      "ids": [
-        "EDU-BOOTCAMP"
-      ]
-    },
-    "자율주행": {
-      "label": "자율주행",
-      "ids": [
-        "EDU-BOOTCAMP"
-      ]
-    },
-    "포트폴리오": {
-      "label": "포트폴리오",
-      "ids": [
-        "EDU-CAMP-2026"
-      ]
-    },
-    "피지컬ai": {
-      "label": "피지컬 AI",
-      "ids": [
-        "EDU-BOOTCAMP"
-      ]
-    }
-  },
-  "skills": [
-    {
-      "label": "GitHub",
-      "count": 1,
-      "ids": [
-        "EDU-CAMP-2026"
-      ]
-    },
-    {
-      "label": "ROS 2",
-      "count": 1,
-      "ids": [
-        "EDU-BOOTCAMP"
-      ]
-    },
-    {
-      "label": "로봇 인지",
-      "count": 1,
-      "ids": [
-        "EDU-BOOTCAMP"
-      ]
-    },
-    {
-      "label": "자율주행",
-      "count": 1,
-      "ids": [
-        "EDU-BOOTCAMP"
-      ]
-    },
-    {
-      "label": "포트폴리오",
-      "count": 1,
-      "ids": [
-        "EDU-CAMP-2026"
-      ]
-    },
-    {
-      "label": "피지컬 AI",
-      "count": 1,
-      "ids": [
-        "EDU-BOOTCAMP"
-      ]
-    }
-  ],
-  "todo": [
-    {
-      "id": "EDU-BOOTCAMP",
-      "title": "피지컬 AI 나노디그리",
-      "items": [
-        "과정별 수강 기간 입력",
-        "수료 여부와 수료증 번호 입력"
-      ]
-    },
-    {
-      "id": "EDU-CAMP-2026",
-      "title": "AI 커리어 점프업 캠프",
-      "items": [
-        "참여·수료 여부 확인 후 status를 confirmed로 변경"
-      ]
-    }
-  ]
+  "by_year": {},
+  "by_tag": {},
+  "skills": [],
+  "todo": []
 }

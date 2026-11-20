@@ -130,7 +130,7 @@
         <p class="eyebrow">PORTFOLIO · ${esc(ym(profile.updated))} 기준</p>
         <h1>${esc(profile.name)}${nameEn}</h1>
         <p class="headline">${mark(profile.headline)}</p>
-        <ul class="intro">${(profile.intro || []).map((l) => `<li>${mark(l)}</li>`).join("")}</ul>
+        ${profile.intro?.length ? `<ul class="intro">${profile.intro.map((l) => `<li>${mark(l)}</li>`).join("")}</ul>` : ""}
         <dl class="hero-meta">
           <div><dt>목표 직무</dt><dd>${roleChips(profile.target_roles || [])}</dd></div>
           <div><dt>관심 직무</dt><dd>${roleChips(profile.interest_roles || [], true)}</dd></div>
@@ -146,25 +146,20 @@
     $("#toc").innerHTML = typeOrder
       .map((t) => `<li><a href="#sec-${t}"><span>${esc(T.types[t].label)}</span><span class="n">${index.counts[t] || 0}</span></a></li>`)
       .join("");
-    $("#tag-index").innerHTML = index.skills
-      .map((s) => {
-        const key = normTag(s.label);
-        return `<button type="button" class="tag-btn" data-tag="${esc(key)}" aria-pressed="${state.tag === key}" title="${esc(s.ids.join(", "))}">${esc(s.label)}<sup>${s.count}</sup></button>`;
-      })
-      .join("");
+    $("#tag-index").innerHTML = index.skills.length
+      ? index.skills
+          .map((s) => {
+            const key = normTag(s.label);
+            return `<button type="button" class="tag-btn" data-tag="${esc(key)}" aria-pressed="${state.tag === key}" title="${esc(s.ids.join(", "))}">${esc(s.label)}<sup>${s.count}</sup></button>`;
+          })
+          .join("")
+      : '<span class="side-hint">항목에 tags를 입력하면 표시</span>';
     $("#todo-count").textContent = index.todo.length ? `${index.todo.length}건` : "";
     $("#todo-list").innerHTML = index.todo.length
       ? index.todo
           .map((t) => `<li><b>${esc(t.title)}</b><ul>${t.items.slice(0, 4).map((i) => `<li>${mark(i)}</li>`).join("")}${t.items.length > 4 ? `<li class="muted">외 ${t.items.length - 4}건</li>` : ""}</ul></li>`)
           .join("")
       : '<li class="muted">없음</li>';
-  }
-
-  function renderRoleChips() {
-    const chips = [["", "전체"], ...Object.entries(T.roles).map(([k, v]) => [k, v.label])];
-    $("#role-chips").innerHTML = chips
-      .map(([k, label]) => `<button type="button" class="chip" data-role="${k}" aria-pressed="${state.role === k}">${esc(label)}</button>`)
-      .join("");
   }
 
   /* ---------- 카드 ---------- */
@@ -537,13 +532,6 @@
       clearTimeout(qTimer);
       qTimer = setTimeout(() => { state.q = e.target.value.trim(); renderSections(); }, 120);
     });
-    $("#role-chips").addEventListener("click", (e) => {
-      const b = e.target.closest("[data-role]");
-      if (!b) return;
-      state.role = b.dataset.role;
-      renderRoleChips();
-      renderSections();
-    });
     $("#tag-index").addEventListener("click", (e) => {
       const b = e.target.closest("[data-tag]");
       if (!b) return;
@@ -563,7 +551,7 @@
       if (e.target.closest("#reset-filter")) {
         state.q = ""; state.role = ""; state.tag = "";
         $("#q").value = "";
-        renderRoleChips(); renderSide(); renderSections();
+        renderSide(); renderSections();
       }
     });
     document.addEventListener("change", (e) => {
@@ -610,7 +598,6 @@
   /* ---------- 시작 ---------- */
   applyTheme(THEMES.includes(store.get("pf-theme")) ? store.get("pf-theme") : "auto");
   renderHero();
-  renderRoleChips();
   renderSide();
   renderTargets();
   renderSections();
