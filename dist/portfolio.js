@@ -321,14 +321,14 @@ window.PORTFOLIO = {
     "line": "Gazebo 동굴 월드에서 사족보행 로봇 Go2의 지도 작성, 자율주행, 조난자 좌표 산출을 하나의 ROS 2 실행 절차로 묶은 구조 로봇 시뮬레이션",
     "short": "통신·GPS가 끊긴 동굴 재난 현장을 가정한 프로젝트. 2D LiDAR SLAM으로 지도를 만들고 Nav2로 이동하며, YOLO11n 탐지 결과를 depth·카메라 내부 파라미터·TF와 결합해 조난자의 map 좌표를 발행하고 1m 이내 접근 시 자동 정지하는 파이프라인 구현."
    },
-   "problem": "동굴·지하 갱도 붕괴 현장은 구조대원 직접 진입이 위험하고 통신·GPS가 차단되어 위치 파악 자체가 어려운 환경. 바위·단차·경사 지형에서는 바퀴형 플랫폼의 주행도 제한적.",
+   "problem": "동굴·지하 갱도 붕괴 현장은 구조대원 직접 진입이 위험하고 통신·GPS가 차단되어 위치 파악 자체가 어려운 환경. 2026년 5월 라오스 동굴 침수 사고(주민 5명 조난)처럼 지형과 자연재해가 겹치면 발견 이후 구조까지도 난항. 바위·단차·경사 지형에서는 바퀴형 플랫폼의 주행도 제한적.",
    "goal": "카메라 픽셀 → 거리 → 로봇 기준 좌표 → 지도 기준 절대좌표 4단계 변환으로 구조대가 실제로 찾아갈 수 있는 조난자 좌표 산출",
    "architecture": [
     "Gazebo Classic: cave_world_custom.world + Go2 스폰, 센서 front_laser(2D) · lidar3d(16ch) · RGB-D 카메라",
     "지도·위치추정 택1: slam_toolbox 라이브 매핑 / map_server + AMCL 저장 지도 모드",
     "ground_truth_odom_bridge: Gazebo 실제 pose → /odom, EMA 필터로 보행 흔들림 완화",
-    "yolo_survivor_detector: YOLO11n person 탐지 → depth 중앙값 거리 → intrinsic + TF + odom → map 좌표",
-    "Nav2 → /cmd_vel → CHAMP 다리 역기구학·gait 생성 → 관절 명령"
+    "yolo_survivor_detector: YOLO11n person 탐지 → 박스 중앙 ROI 30% 유효 depth 중앙값 → intrinsic + TF + odom → map 좌표",
+    "RViz 목표점 → Nav2 경로 계산·추종 → /cmd_vel → CHAMP 다리 역기구학·gait 생성 → 관절 명령"
    ],
    "my_work": [
     {
@@ -344,7 +344,13 @@ window.PORTFOLIO = {
      ]
     },
     {
-     "text": "YOLO11n 바운딩박스 중심 픽셀을 depth 중앙값, 카메라 intrinsic, base_link ↔ 카메라 TF, 로봇 위치와 결합해 조난자 map 좌표 산출 후 /survivor_position(PointStamped) 발행",
+     "text": "RGB-D 기반 조난자 3차원 위치 계산. YOLO11n 바운딩박스 중심을 depth 해상도에 맞게 비례 변환하고, 박스 중앙 ROI 30% 영역의 유효 depth 중앙값으로 거리 추정",
+     "roles": [
+      "vision"
+     ]
+    },
+    {
+     "text": "카메라 intrinsic, 카메라 설치 위치·방향(TF), 로봇 위치·방향을 차례로 반영해 조난자 world 좌표 산출 후 /survivor_position(PointStamped) 발행",
      "roles": [
       "vision",
       "robotics"
@@ -355,6 +361,12 @@ window.PORTFOLIO = {
      "roles": [
       "robotics",
       "vision"
+     ]
+    },
+    {
+     "text": "RViz 목표점 지정 → Nav2 점유 격자 기반 경로 계산 → 실시간 추종, 예기치 않은 장애물 감지 시 경로 재계획하는 목표점 내비게이션 구성",
+     "roles": [
+      "autonomy"
      ]
     },
     {
@@ -422,6 +434,17 @@ window.PORTFOLIO = {
      ]
     },
     {
+     "title": "지형 제약에 맞춘 시나리오 재구성",
+     "problem": "Go2가 가파른 비탈길을 오르지 못하고, 조난자 모형이 카메라로 발견할 수 없는 높이에 생성되는 현상",
+     "cause": "동굴 월드의 급경사 구간이 사족보행 모델의 등판 한계를 넘고, 모형 스폰 z값이 지형 높이와 맞지 않음",
+     "fix": "급경사 지형은 Gazebo 벽으로 처리해 진입을 막고, 경사 위 조난자는 평지로 이동. 모형 z값을 조정해 바닥에 놓이도록 고정",
+     "result": "주행 가능 구역 안에서 반복 가능한 탐지 시나리오 확보",
+     "roles": [
+      "robotics",
+      "eval"
+     ]
+    },
+    {
      "title": "YOLO 노드 실행 환경 충돌",
      "problem": "조난자 탐지 노드 실행 직후 크래시, GPU 추론 실패",
      "cause": "시스템 NumPy 1.x에 맞춰 빌드된 cv_bridge와 ultralytics가 가져오는 NumPy 2.x의 ABI 충돌, cuDNN 버전 불일치",
@@ -438,12 +461,20 @@ window.PORTFOLIO = {
      "reason": "동굴 내부 바위·단차·경사 지형에서 주행 가능성이 더 높은 플랫폼. 실물 부재로 Gazebo 시뮬레이션 진행"
     },
     {
+     "choice": "드론 모델(sit_drone) 폐기, Go2로 일원화",
+     "reason": "드론은 선속도·각속도·yaw 등 파라미터가 많아 고도 1.5m 고정, x·y 이동만으로 탐사하도록 구성했지만 고도가 일정하지 않은 지형과 불규칙한 장애물 때문에 기대한 탐색 결과 미달. 직접 조작이나 Nav2 수정은 기간 안에 어렵다고 판단"
+    },
+    {
+     "choice": "완전 자율 탐사 대신 목표점 지정 + Nav2 자율주행",
+     "reason": "울퉁불퉁한 지형에서 SLAM 지도가 틀어지고 explore_lite 오판정 버그가 남아 있는 상황. 목표점은 사람이 지정하고 그 지점까지는 로봇이 자율주행하는 방식으로 범위 조정"
+    },
+    {
      "choice": "SLAM 모드와 AMCL 모드 분리 운용",
      "reason": "특징점이 적은 동굴에서 라이브 SLAM 품질이 실행마다 달라짐. 반복 실험은 저장 지도로 조건 고정"
     },
     {
-     "choice": "depth 중앙값으로 거리 추정",
-     "reason": "바운딩박스 안에 배경 픽셀이 섞일 때의 이상치 배제"
+     "choice": "박스 중앙 ROI 30% 유효 depth 중앙값",
+     "reason": "바운딩박스 안에 배경 픽셀이 섞일 때의 이상치와 비정상 depth 값 배제"
     },
     {
      "choice": "2D LiDAR 사거리 3.5m → 20m 확장",
@@ -466,7 +497,8 @@ window.PORTFOLIO = {
    ],
    "lessons": [
     "튜닝값이 먹히지 않으면 값보다 그 파일이 실제로 로드되는지부터 확인하는 순서",
-    "시뮬레이션 전용 우회(ground truth odom)는 결과와 함께 '실기체에서는 못 쓰는 부분'으로 따로 기록해 두는 습관"
+    "시뮬레이션 전용 우회(ground truth odom)는 결과와 함께 '실기체에서는 못 쓰는 부분'으로 따로 기록해 두는 습관",
+    "기간 안에 끝낼 수 없는 경로(드론 탐사, 완전 자율 탐사)는 근거를 남기고 접은 뒤 핵심 파이프라인 검증에 집중하는 판단"
    ],
    "next": [
     "explore_lite 목표 도달 오판정 원인 파악 후 완전 자율 매핑 재시도",
@@ -486,10 +518,24 @@ window.PORTFOLIO = {
      "path": "docs/evidence/cave-rescue-robot-summary.pdf"
     }
    ],
+   "materials": [
+    {
+     "label": "발표자료",
+     "detail": "12쪽. 연구 배경(2026.05 라오스 동굴 침수 조난 사건), 연구 목표, 동굴 맵·Go2 모델 리소스, 주요 기술(SLAM 매핑, Nav2 경로계획, YOLO 생존자 탐지), RGB-D 3차원 위치 계산 7단계, world 좌표 변환·자동 정지 6단계, 실시간 탐지 화면, 한계와 재구성(경사 지형, 드론 모델 폐기), 목표점 내비게이션, 시연"
+    },
+    {
+     "label": "프로젝트 요약",
+     "detail": "6쪽. 개요, 아키텍처, 좌표 체계, 개발 이슈 10건과 해결, 기술 스택, 검증 상태, 향후 과제, 실행 절차 (docs/evidence에 수록)"
+    },
+    {
+     "label": "시연 영상",
+     "detail": "webm 2개(약 56MB, 38MB). 지도 위 자율주행과 조난자 탐지·자동 정지 시연"
+    }
+   ],
    "todo": [
     "팀 인원 입력",
     "프로젝트 시작월 입력",
-    "시연 영상 링크 추가"
+    "시연 영상 공유 링크 추가"
    ]
   },
   {
@@ -497,12 +543,12 @@ window.PORTFOLIO = {
    "type": "project",
    "status": "draft",
    "title": "병원 백신 배달 로봇",
-   "subtitle": "한국어 명령 한 줄로 동작하는 TurtleBot3 배달 시뮬레이션",
+   "subtitle": "혈액형별 백신을 자연어 명령으로 배송하는 TurtleBot3 시뮬레이션",
    "org": "피지컬 AI 나노디그리 ND1 캡스톤 · 팀 Vaccine",
    "period": {
     "start": "",
     "end": "2026-07",
-    "note": ""
+    "note": "발표 2026.07.03"
    },
    "team": {
     "size": 6,
@@ -530,30 +576,38 @@ window.PORTFOLIO = {
    ],
    "summary": {
     "line": "\"301호 환자에게 A형 독감 백신 가져다줘\" 한 문장으로 약국 픽업부터 병실 배달까지 수행하는 ROS 2 로봇 시뮬레이션",
-    "short": "AWS RoboMaker Hospital World 위 TurtleBot3가 자연어 명령을 받아 약국에서 백신을 픽업하고 지정 병실까지 배달하는 시스템. 6인 팀에서 ROS 2·Nav2 연동을 맡아 병원 지도 작성, LLM 명령과 시뮬레이션 연결, 실제 이동 흐름 검증 담당."
+    "short": "AWS RoboMaker Hospital World 위 TurtleBot3가 자연어 명령을 받아 약국에서 혈액형별 백신을 픽업하고 지정 병실까지 배달하는 시스템. 6인 팀에서 ROS 2·Nav2 연동을 맡아 시뮬레이션 환경 구성, 병원 지도 작성, AMCL·Nav2 연동, LLM 명령과 시뮬레이션 연결, 이동 흐름 검증 담당."
    },
-   "problem": "로봇에게 일을 시키려면 좌표, 토픽, 액션 서버를 알아야 하는 구조. 시뮬레이션 안에서도 이동 명령과 파지 명령이 따로 떨어져 있어 '백신 배달'이라는 하나의 사용 시나리오로 이어지지 않는 상태.",
+   "problem": "감염병 격리 병동처럼 사람이 오갈수록 위험이 커지는 곳의 반복 물류 문제. 2015년 국내 MERS 유행 당시 병원 안에서만 확진자 186명, 사망자 38명 발생. 그런데 로봇에게 일을 시키려면 좌표, 토픽, 액션 서버를 알아야 하고, 시뮬레이션 안에서도 이동 명령과 파지 명령이 따로 떨어져 있어 하나의 배달 시나리오로 이어지지 않는 상태.",
    "goal": "혈액형 → 백신 종류 → 병실 번호 3중 매핑을 자연어에서 해석하고, 약국 이동 → 픽업 → 병실 이동 → 배치를 사람 개입 없이 완료하는 흐름",
    "architecture": [
     "/llm_command → Node A(LLM 파서, 규칙 기반 폴백) → /mission(JSON)",
-    "Coordinator FSM: PLANNING → NAVIGATING → GRASPING → TRANSPORTING → PLACING → DONE / FAILED, 단계별 최대 2회 재시도",
+    "llm_planner: 여러 배송이 섞인 복합 명령을 mission sequence로 분해",
+    "Coordinator FSM: PLANNING → NAVIGATING → GRASPING → TRANSPORTING → PLACING → DONE, 파지 실패 시 RETRY_GRASP, 한도 초과 시 FAILED",
     "Node B: Nav2 NavigateToPose 액션 클라이언트",
     "Node C: Gazebo /delete_entity · /spawn_entity 텔레포트 기반 픽업·배치",
     "고정 병원 지도 + map_server + AMCL 위치추정"
    ],
    "my_work": [
     {
-     "text": "원본 키트(TurtleBot4 · Gazebo Ignition · Docker)를 TurtleBot3 · Gazebo Classic 11 · 네이티브 ROS 2 Humble 환경으로 옮기는 이식 작업 참여",
+     "text": "AWS RoboMaker Hospital World 도입과 TurtleBot3 · Gazebo Classic 11 환경 구성. 원본 키트(TurtleBot4 · Gazebo Ignition · Docker)를 네이티브 ROS 2 Humble 구성으로 이식",
      "roles": [
       "robotics"
      ],
      "mine": "shared"
     },
     {
-     "text": "병원 월드 지도 작성 담당. explore_lite 자율탐사와 teleop 수동 조작을 병행하며 긴 직선 복도의 누적 오차와 좁은 문틀 끼임 현상 확인, 검증된 고정 지도 + AMCL 위치추정 방식으로 전환",
+     "text": "병원 월드 지도 작성. explore_lite 자율탐사와 teleop 수동 조작을 병행하며 긴 직선 복도의 누적 오차와 좁은 문틀 끼임 현상 확인, 검증된 고정 지도 + AMCL 위치추정 방식으로 전환",
      "roles": [
       "autonomy"
      ]
+    },
+    {
+     "text": "map_server + AMCL + Nav2 연동, RViz 초기 위치 설정과 약국·병실 목표 좌표 이동 테스트",
+     "roles": [
+      "autonomy"
+     ],
+     "mine": "shared"
     },
     {
      "text": "LLM 명령 입력부와 Gazebo 병원 시뮬레이션 연동. /llm_command 한 줄이 Nav2 이동과 텔레포트 픽업·배치까지 이어지는 토픽 흐름 구성",
@@ -607,6 +661,17 @@ window.PORTFOLIO = {
      ]
     },
     {
+     "title": "첫 명령 유실",
+     "problem": "ros2 topic pub --once로 보낸 첫 배달 명령이 간헐적으로 처리되지 않는 현상",
+     "cause": "발행 직후 구독자 매칭이 끝나기 전에 메시지가 나가 버리는 타이밍 문제",
+     "fix": "--once 대신 -r 2 -t 3(2Hz로 3초 반복 발행)으로 명령을 보내도록 실행 절차 변경",
+     "result": "Runbook 실행 절차에 반영",
+     "roles": [
+      "robotics",
+      "eval"
+     ]
+    },
+    {
      "title": "Gazebo GUI 크래시",
      "problem": "gzclient가 실행 직후 Camera px != 0 assertion으로 종료",
      "cause": "gazebo_ros 기본 gzclient.launch.py가 자동으로 붙이는 libgazebo_ros_eol_gui.so(단종 안내 배너 플러그인)와 카메라 씬 초기화 타이밍 충돌",
@@ -641,6 +706,10 @@ window.PORTFOLIO = {
     {
      "choice": "실시간 SLAM 대신 고정 지도 + AMCL",
      "reason": "좁은 병실 입구와 긴 직선 복도가 많은 병원 구조에서 SLAM 지도 품질 불안정. 지도가 주어진 상태에서 위치만 추정하는 쪽이 가볍고 안정적"
+    },
+    {
+     "choice": "sim_mode 선검증 후 Gazebo·Nav2 실연동",
+     "reason": "지도·odom·scan·TF 문제와 LLM 로직 문제가 한꺼번에 섞이면 원인 분리가 어려움. 토픽 파이프라인을 먼저 확인한 뒤 실연동"
     },
     {
      "choice": "LLM 파서 + 규칙 기반 폴백",
@@ -694,6 +763,32 @@ window.PORTFOLIO = {
     {
      "label": "프로젝트 요약 PDF",
      "path": "docs/evidence/vaccine-robot-summary.pdf"
+    }
+   ],
+   "materials": [
+    {
+     "label": "기획서",
+     "detail": "8쪽. 팀 구성과 역할, As-Is·To-Be 문제 정의, 기능 요구사항 7개와 검증 방법, 3노드 토픽 구조, 약 30시간 6단계 개발 계획(3단계 환경 구성·5단계 AMCL·Nav2 연동 담당), 리스크 5개와 대비책, 검증 계획"
+    },
+    {
+     "label": "결과보고서",
+     "detail": "7쪽. 노드별 구현 완료 현황(Node A, Coordinator FSM, Node B, Node C, Launch·Config), 재현용 실행 명령, E2E 증빙 표, 트러블슈팅 4건, 역할별 회고, 한계와 개선 방향"
+    },
+    {
+     "label": "발표자료",
+     "detail": "12쪽, 2026.07.03 발표. 배경(2015 MERS 병원 내 전파, 에볼라 의료진 감염 위험), 목표, LLM·FSM 파트(단일·복합 명령 해석, FSM 상태 제어, 파지 실패 재시도), 시뮬레이션 파트(SLAM 지도 생성, 좌표 매핑, 박스 끼임 실패 사례, 배달 테스트, 데모 영상)"
+    },
+    {
+     "label": "Runbook",
+     "detail": "2쪽. 최초 빌드, 터미널 5개 실행 순서, 반복 발행 방식의 명령 전송, /robot_status 모니터링, GROQ API 키 설정, 증상·원인·조치 트러블슈팅 표"
+    },
+    {
+     "label": "프로젝트 요약",
+     "detail": "6쪽. 개요, 아키텍처, 데이터 매핑, 개발 이슈 5건과 해결, 기술 스택, 검증 상태, 향후 과제 (docs/evidence에 수록)"
+    },
+    {
+     "label": "시연 영상",
+     "detail": "mp4 2개, webm 1개. 명령 입력부터 배치 완료까지 시연. 공유는 Google Drive 링크로 대체"
     }
    ],
    "todo": [
@@ -871,7 +966,7 @@ window.PORTFOLIO = {
     "status": "draft",
     "title": "병원 백신 배달 로봇",
     "org": "피지컬 AI 나노디그리 ND1 캡스톤 · 팀 Vaccine",
-    "period": "~ 2026.07",
+    "period": "~ 2026.07 (발표 2026.07.03)",
     "line": "\"301호 환자에게 A형 독감 백신 가져다줘\" 한 문장으로 약국 픽업부터 병실 배달까지 수행하는 ROS 2 로봇 시뮬레이션",
     "tags": [
      "ROS 2",
@@ -1329,7 +1424,7 @@ window.PORTFOLIO = {
     "items": [
      "팀 인원 입력",
      "프로젝트 시작월 입력",
-     "시연 영상 링크 추가"
+     "시연 영상 공유 링크 추가"
     ]
    },
    {

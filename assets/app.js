@@ -252,6 +252,11 @@
           ${rec.lessons?.length ? `<section class="block"><h4 class="block-title">배운 점</h4><ul class="bullets">${rec.lessons.map((l) => `<li>${mark(l)}</li>`).join("")}</ul></section>` : ""}
           ${rec.next?.length ? `<section class="block"><h4 class="block-title">다음 과제</h4><ul class="bullets">${rec.next.map((l) => `<li>${mark(l)}</li>`).join("")}</ul></section>` : ""}
         </details>` : ""}
+        ${rec.materials?.length ? `
+        <details class="more">
+          <summary>원본 자료 요약 <span class="muted">${rec.materials.length}건 · 원본은 로컬 보관</span></summary>
+          <dl class="decisions block">${rec.materials.map((m) => `<div><dt>${esc(m.label)}</dt><dd>${mark(m.detail)}</dd></div>`).join("")}</dl>
+        </details>` : ""}
         ${tagRow(rec)}
         ${linksRow(rec)}
         ${todoBox(rec)}
