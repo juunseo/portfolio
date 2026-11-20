@@ -71,12 +71,13 @@
     "tags": ["SO-ARM101", "Isaac Sim", "Isaac Lab", "LeRobot", "SmolVLA", "GR00T N1.7", "VLA", "Sim-to-Real", "도메인 랜덤화", "Python"],
     "roles": ["research", "robotics", "eval"],
     "links": [
+      { "label": "GitHub (내 저장소)", "url": "https://github.com/juunseo/Sim-to-Real-SO-101-Workshop" },
       { "label": "블로그: Sim to real So-arm 101", "url": "https://blog.naver.com/dhcjsxor321/224400031657" },
       { "label": "참고: Robust Skills, Brittle Grounding (arXiv 2602.24143)", "url": "https://arxiv.org/abs/2602.24143" },
       { "label": "참고: OBEYED-VLA (arXiv 2512.22519)", "url": "https://arxiv.org/abs/2512.22519" }
     ],
     "attachments": [],
-    "todo": ["프로브 74%의 지표 정의 입력 (예: 오차 몇 cm 이내 비율)", "평가 회차별 성공률 표 정리", "실험 영상·그래프 첨부"]
+    "todo": ["GitHub 저장소 공개 전환 (2026-11-20 확인 시 외부 접근 불가)", "프로브 74%의 지표 정의 입력 (예: 오차 몇 cm 이내 비율)", "평가 회차별 성공률 표 정리", "실험 영상·그래프 첨부"]
   },
   {
     "id": "RES-MYCOBOT",
@@ -107,11 +108,12 @@
     "tags": ["myCobot 280", "MuJoCo", "pymycobot", "텔레오퍼레이션", "PID 튜닝", "Python", "Ubuntu 24.04"],
     "roles": ["robotics", "research"],
     "links": [
+      { "label": "GitHub (내 저장소)", "url": "https://github.com/juunseo/my_cobot280" },
       { "label": "블로그: Mycobot 280 m5 stack robot arm", "url": "https://blog.naver.com/dhcjsxor321/224440638595" },
       { "label": "공식 mycobot_ros2", "url": "https://github.com/elephantrobotics/mycobot_ros2" },
       { "label": "공식 pymycobot", "url": "https://github.com/elephantrobotics/pymycobot" }
     ],
     "attachments": [],
-    "todo": ["질량·토크 보정 후 시뮬레이션-실물 오차 측정", "텔레오퍼레이션 영상 첨부"]
+    "todo": ["GitHub 저장소 공개 전환 (2026-11-20 확인 시 외부 접근 불가)", "질량·토크 보정 후 시뮬레이션-실물 오차 측정", "텔레오퍼레이션 영상 첨부"]
   }
 ]
