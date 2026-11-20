@@ -8,7 +8,7 @@
     "project": 2,
     "research": 3
   },
-  "attachments": 0,
+  "attachments": 14,
   "records": [
     {
       "id": "EDU-01",
@@ -58,8 +58,8 @@
         "vision",
         "eval"
       ],
-      "attachments": 0,
-      "gaps": 3
+      "attachments": 3,
+      "gaps": 2
     },
     {
       "id": "PRJ-VACCINE",
@@ -86,7 +86,7 @@
         "llm",
         "eval"
       ],
-      "attachments": 0,
+      "attachments": 3,
       "gaps": 2
     },
     {
@@ -112,8 +112,8 @@
         "robotics",
         "eval"
       ],
-      "attachments": 0,
-      "gaps": 3
+      "attachments": 3,
+      "gaps": 2
     },
     {
       "id": "RES-SO101-SIM2REAL",
@@ -140,8 +140,8 @@
         "robotics",
         "eval"
       ],
-      "attachments": 0,
-      "gaps": 4
+      "attachments": 3,
+      "gaps": 3
     },
     {
       "id": "RES-MYCOBOT",
@@ -164,8 +164,8 @@
         "robotics",
         "research"
       ],
-      "attachments": 0,
-      "gaps": 3
+      "attachments": 2,
+      "gaps": 2
     }
   ],
   "by_type": {
@@ -704,8 +704,7 @@
       "title": "동굴 재난 탐사·조난자 탐지 로봇",
       "items": [
         "팀 인원과 내 역할 명칭 확인",
-        "시작월 입력",
-        "시연 영상 첨부 또는 링크 추가"
+        "시작월 입력"
       ]
     },
     {
@@ -721,7 +720,6 @@
       "title": "조명 변화에 강한 VLA 추론: 추론 시점 액션 청크 보정",
       "items": [
         "실물 평가 횟수 기록 (GR00T '거의 100%'의 시행 수)",
-        "어텐션 맵 이미지 첨부",
         "논문 제출처·일정 입력"
       ]
     },
@@ -731,8 +729,7 @@
       "items": [
         "GitHub 저장소 공개 전환 (2026-11-20 확인 시 외부 접근 불가)",
         "프로브 74%의 지표 정의 입력 (예: 오차 몇 cm 이내 비율)",
-        "평가 회차별 성공률 표 정리",
-        "실험 영상·그래프 첨부"
+        "평가 회차별 성공률 표 정리"
       ]
     },
     {
@@ -740,8 +737,7 @@
       "title": "myCobot 280 텔레오퍼레이션: MuJoCo 연동과 조이스틱 제어 튜닝",
       "items": [
         "GitHub 저장소 공개 전환 (2026-11-20 확인 시 외부 접근 불가)",
-        "질량·토크 보정 후 시뮬레이션-실물 오차 측정",
-        "텔레오퍼레이션 영상 첨부"
+        "질량·토크 보정 후 시뮬레이션-실물 오차 측정"
       ]
     }
   ]

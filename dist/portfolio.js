@@ -324,11 +324,32 @@ window.PORTFOLIO = {
      "url": "https://github.com/boseon25/go2-cave-slam-nav2"
     }
    ],
-   "attachments": [],
+   "attachments": [
+    {
+     "type": "image",
+     "path": "media/PRJ-CAVE/survivor-detected-stop.jpg",
+     "name": "survivor-detected-stop.jpg",
+     "size": 246564,
+     "caption": "조난자 탐지 후 자동 정지 (신뢰도 0.90, 최근접 거리 0.97 m)"
+    },
+    {
+     "type": "image",
+     "path": "media/PRJ-CAVE/amcl-nav2-navigation.jpg",
+     "name": "amcl-nav2-navigation.jpg",
+     "size": 256616,
+     "caption": "저장 지도 + AMCL 위치추정 기반 Nav2 목표점 자율주행 (RViz 경로 표시)"
+    },
+    {
+     "type": "image",
+     "path": "media/PRJ-CAVE/slam-nav2-yolo-overview.jpg",
+     "name": "slam-nav2-yolo-overview.jpg",
+     "size": 81579,
+     "caption": "발표자료 중 주요 기술 요약: SLAM 맵 생성, Nav2 경로 찾기, YOLO 조난자 탐지"
+    }
+   ],
    "todo": [
     "팀 인원과 내 역할 명칭 확인",
-    "시작월 입력",
-    "시연 영상 첨부 또는 링크 추가"
+    "시작월 입력"
    ]
   },
   {
@@ -511,7 +532,29 @@ window.PORTFOLIO = {
      "url": "https://drive.google.com/drive/folders/1dNTDRravAHDpeVM6yv4RLfx1ZmiWcdDK"
     }
    ],
-   "attachments": [],
+   "attachments": [
+    {
+     "type": "image",
+     "path": "media/PRJ-VACCINE/gazebo-hospital-nav.jpg",
+     "name": "gazebo-hospital-nav.jpg",
+     "size": 159563,
+     "caption": "Gazebo 병원 월드에서 목표 지점으로 이동 중인 TurtleBot3 (파란 영역: LiDAR 스캔)"
+    },
+    {
+     "type": "image",
+     "path": "media/PRJ-VACCINE/llm-planner-log.jpg",
+     "name": "llm-planner-log.jpg",
+     "size": 61957,
+     "caption": "LLM 플래너 로그: '약국에서 약을 가져다 201호 환자에게 전달해줘' → 미션 2건 발행 → 계획 전체 완료"
+    },
+    {
+     "type": "image",
+     "path": "media/PRJ-VACCINE/fsm-done-log.jpg",
+     "name": "fsm-done-log.jpg",
+     "size": 26381,
+     "caption": "상태머신 로그: 이동 성공 → 배치(PLACING) → 미션 완료(DONE) → 계획 전체 완료 2/2"
+    }
+   ],
    "todo": [
     "시작월 입력",
     "직접 잰 수치 추가 (배달 1회 소요 시간 등)"
@@ -577,10 +620,31 @@ window.PORTFOLIO = {
      "url": "https://arxiv.org/abs/2506.01844"
     }
    ],
-   "attachments": [],
+   "attachments": [
+    {
+     "type": "image",
+     "path": "media/RES-SO101-PAPER/groot-real-inference.jpg",
+     "name": "groot-real-inference.jpg",
+     "size": 59443,
+     "caption": "실물 SO-ARM101에서 GR00T N1.7 정책 추론 (삼중 수집 120 에피소드 학습)"
+    },
+    {
+     "type": "image",
+     "path": "media/RES-SO101-PAPER/smolvla-attention-map.jpg",
+     "name": "smolvla-attention-map.jpg",
+     "size": 64041,
+     "caption": "SmolVLA 실시간 어텐션 맵 (빨강 지시, 카메라 2대별 백본 셀프 어텐션·액션 헤드 결합 어텐션·크로스 어텐션)"
+    },
+    {
+     "type": "image",
+     "path": "media/RES-SO101-PAPER/triple-collection.jpg",
+     "name": "triple-collection.jpg",
+     "size": 20538,
+     "caption": "삼중 수집 방식: 배치·조명이 같은 장면에서 세 색을 한 번씩 시연"
+    }
+   ],
    "todo": [
     "실물 평가 횟수 기록 (GR00T '거의 100%'의 시행 수)",
-    "어텐션 맵 이미지 첨부",
     "논문 제출처·일정 입력"
    ]
   },
@@ -655,12 +719,33 @@ window.PORTFOLIO = {
      "url": "https://arxiv.org/abs/2512.22519"
     }
    ],
-   "attachments": [],
+   "attachments": [
+    {
+     "type": "image",
+     "path": "media/RES-SO101-SIM2REAL/hdri-color-check.jpg",
+     "name": "hdri-color-check.jpg",
+     "size": 31924,
+     "caption": "색상·조명 재설계 후 확인: 차가운 실내광과 따뜻한 스튜디오광 아래에서 세 색 유지 (Isaac Sim)"
+    },
+    {
+     "type": "image",
+     "path": "media/RES-SO101-SIM2REAL/groot-sim-eval.jpg",
+     "name": "groot-sim-eval.jpg",
+     "size": 48219,
+     "caption": "GR00T N1.7 보조 헤드 유무 비교 실험의 평가 장면 (왼쪽 손목 카메라, 오른쪽 상단 카메라)"
+    },
+    {
+     "type": "image",
+     "path": "media/RES-SO101-SIM2REAL/progress-table.jpg",
+     "name": "progress-table.jpg",
+     "size": 54909,
+     "caption": "2026년 9월 초 기준 단계별 진행 현황 (SmolVLA 색 구분 성공 1/8, 해상도 가설 기각)"
+    }
+   ],
    "todo": [
     "GitHub 저장소 공개 전환 (2026-11-20 확인 시 외부 접근 불가)",
     "프로브 74%의 지표 정의 입력 (예: 오차 몇 cm 이내 비율)",
-    "평가 회차별 성공률 표 정리",
-    "실험 영상·그래프 첨부"
+    "평가 회차별 성공률 표 정리"
    ]
   },
   {
@@ -724,11 +809,25 @@ window.PORTFOLIO = {
      "url": "https://github.com/elephantrobotics/pymycobot"
     }
    ],
-   "attachments": [],
+   "attachments": [
+    {
+     "type": "image",
+     "path": "media/RES-MYCOBOT/joystick-teleop-real.jpg",
+     "name": "joystick-teleop-real.jpg",
+     "size": 105809,
+     "caption": "PID 조정 후 조이스틱 텔레오퍼레이션 (실물 myCobot 280)"
+    },
+    {
+     "type": "image",
+     "path": "media/RES-MYCOBOT/mujoco-real-sync.jpg",
+     "name": "mujoco-real-sync.jpg",
+     "size": 92426,
+     "caption": "MuJoCo 연동: 흰색은 시뮬레이션 로봇, 노란색은 실물 로봇 자세 실시간 반영 (왼쪽 위 관절별 목표·실측값)"
+    }
+   ],
    "todo": [
     "GitHub 저장소 공개 전환 (2026-11-20 확인 시 외부 접근 불가)",
-    "질량·토크 보정 후 시뮬레이션-실물 오차 측정",
-    "텔레오퍼레이션 영상 첨부"
+    "질량·토크 보정 후 시뮬레이션-실물 오차 측정"
    ]
   }
  ],
@@ -795,7 +894,7 @@ window.PORTFOLIO = {
    "project": 2,
    "research": 3
   },
-  "attachments": 0,
+  "attachments": 14,
   "records": [
    {
     "id": "EDU-01",
@@ -845,8 +944,8 @@ window.PORTFOLIO = {
      "vision",
      "eval"
     ],
-    "attachments": 0,
-    "gaps": 3
+    "attachments": 3,
+    "gaps": 2
    },
    {
     "id": "PRJ-VACCINE",
@@ -873,7 +972,7 @@ window.PORTFOLIO = {
      "llm",
      "eval"
     ],
-    "attachments": 0,
+    "attachments": 3,
     "gaps": 2
    },
    {
@@ -899,8 +998,8 @@ window.PORTFOLIO = {
      "robotics",
      "eval"
     ],
-    "attachments": 0,
-    "gaps": 3
+    "attachments": 3,
+    "gaps": 2
    },
    {
     "id": "RES-SO101-SIM2REAL",
@@ -927,8 +1026,8 @@ window.PORTFOLIO = {
      "robotics",
      "eval"
     ],
-    "attachments": 0,
-    "gaps": 4
+    "attachments": 3,
+    "gaps": 3
    },
    {
     "id": "RES-MYCOBOT",
@@ -951,8 +1050,8 @@ window.PORTFOLIO = {
      "robotics",
      "research"
     ],
-    "attachments": 0,
-    "gaps": 3
+    "attachments": 2,
+    "gaps": 2
    }
   ],
   "by_type": {
@@ -1491,8 +1590,7 @@ window.PORTFOLIO = {
     "title": "동굴 재난 탐사·조난자 탐지 로봇",
     "items": [
      "팀 인원과 내 역할 명칭 확인",
-     "시작월 입력",
-     "시연 영상 첨부 또는 링크 추가"
+     "시작월 입력"
     ]
    },
    {
@@ -1508,7 +1606,6 @@ window.PORTFOLIO = {
     "title": "조명 변화에 강한 VLA 추론: 추론 시점 액션 청크 보정",
     "items": [
      "실물 평가 횟수 기록 (GR00T '거의 100%'의 시행 수)",
-     "어텐션 맵 이미지 첨부",
      "논문 제출처·일정 입력"
     ]
    },
@@ -1518,8 +1615,7 @@ window.PORTFOLIO = {
     "items": [
      "GitHub 저장소 공개 전환 (2026-11-20 확인 시 외부 접근 불가)",
      "프로브 74%의 지표 정의 입력 (예: 오차 몇 cm 이내 비율)",
-     "평가 회차별 성공률 표 정리",
-     "실험 영상·그래프 첨부"
+     "평가 회차별 성공률 표 정리"
     ]
    },
    {
@@ -1527,8 +1623,7 @@ window.PORTFOLIO = {
     "title": "myCobot 280 텔레오퍼레이션: MuJoCo 연동과 조이스틱 제어 튜닝",
     "items": [
      "GitHub 저장소 공개 전환 (2026-11-20 확인 시 외부 접근 불가)",
-     "질량·토크 보정 후 시뮬레이션-실물 오차 측정",
-     "텔레오퍼레이션 영상 첨부"
+     "질량·토크 보정 후 시뮬레이션-실물 오차 측정"
     ]
    }
   ]
