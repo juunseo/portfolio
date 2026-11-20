@@ -17,7 +17,8 @@ data/.*.tmp
 .env
 __pycache__/
 *.pyc
-.vscode/
+.vscode/*
+!.vscode/tasks.json
 .idea/
 .DS_Store
 Thumbs.db
