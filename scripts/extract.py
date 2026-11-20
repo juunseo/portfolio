@@ -185,7 +185,8 @@ def render_project(w: Writer, rec: dict, detail: str, roles: set[str], tax: dict
     if rec.get("results"):
         w.label("결과")
         for item in rec["results"]:
-            w.li(item["text"])
+            metric, text = item.get("metric", ""), item.get("text", "")
+            w.li(f"{metric}: {text}" if metric and text else metric or text)
         w.blank()
     if detail == "full":
         if rec.get("decisions"):
