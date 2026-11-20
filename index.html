@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>오준서 포트폴리오</title>
+  <meta name="description" content="오준서 포트폴리오: 학력, 병역, 수상, 프로젝트, 연구 원천 데이터와 이력서 추출">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232b5a87'/%3E%3Ctext x='16' y='22' font-size='16' text-anchor='middle' fill='white' font-family='sans-serif' font-weight='700'%3E오%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+  <a class="skip" href="#content">본문으로 건너뛰기</a>
+
+  <header class="hero" id="hero"></header>
+
+  <div class="toolbar" role="search">
+    <div class="wrap toolbar-inner">
+      <label class="search">
+        <span class="sr-only">검색</span>
+        <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"/><path d="m13 13 4 4"/></svg>
+        <input id="q" type="search" placeholder="제목, 기술, 내가 한 일 검색" autocomplete="off">
+      </label>
+      <div class="chips" id="role-chips" aria-label="직무별 보기"></div>
+      <div class="toolbar-actions">
+        <label class="switch"><input type="checkbox" id="show-templates"><span>작성 양식 보기</span></label>
+        <button type="button" class="btn primary" id="open-extract">이력서 추출 <span class="count" id="sel-count" hidden></span></button>
+        <button type="button" class="btn icon" id="theme" aria-label="테마 전환" title="테마 전환"></button>
+      </div>
+    </div>
+    <div class="wrap filter-note" id="filter-note" hidden></div>
+  </div>
+
+  <div class="wrap layout">
+    <aside class="side" aria-label="목차와 인덱스">
+      <nav class="side-block">
+        <h2 class="side-title">목차</h2>
+        <ol class="toc" id="toc"></ol>
+      </nav>
+      <section class="side-block">
+        <h2 class="side-title">기술 인덱스</h2>
+        <p class="side-hint">태그를 누르면 그 기술이 쓰인 항목만 표시</p>
+        <div class="tag-index" id="tag-index"></div>
+      </section>
+      <section class="side-block">
+        <h2 class="side-title">보완할 것 <span class="muted" id="todo-count"></span></h2>
+        <ul class="todo-list" id="todo-list"></ul>
+      </section>
+    </aside>
+
+    <main class="content" id="content" tabindex="-1">
+      <p class="app-error" id="app-error" hidden>dist/portfolio.js를 불러오지 못했습니다. 저장소 루트에서 <code>python scripts/build.py</code> 실행 후 다시 열어 주세요.</p>
+      <div id="sections"></div>
+    </main>
+  </div>
+
+  <footer class="foot">
+    <div class="wrap" id="foot"></div>
+  </footer>
+
+  <div class="drawer-backdrop" id="drawer-backdrop" hidden></div>
+  <aside class="drawer" id="drawer" aria-label="이력서 추출" aria-hidden="true">
+    <div class="drawer-head">
+      <h2>이력서 추출</h2>
+      <button type="button" class="btn icon" id="close-extract" aria-label="닫기">
+        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 5l10 10M15 5 5 15"/></svg>
+      </button>
+    </div>
+    <div class="drawer-body">
+      <p class="drawer-scope" id="scope"></p>
+      <div class="field">
+        <label for="target">지원처</label>
+        <select id="target"></select>
+        <p class="field-hint" id="target-hint"></p>
+      </div>
+      <fieldset class="field seg">
+        <legend>분량</legend>
+        <label><input type="radio" name="detail" value="line"><span>한 줄</span></label>
+        <label><input type="radio" name="detail" value="short" checked><span>요약</span></label>
+        <label><input type="radio" name="detail" value="full"><span>상세</span></label>
+      </fieldset>
+      <fieldset class="field seg">
+        <legend>형식</legend>
+        <label><input type="radio" name="fmt" value="md" checked><span>Markdown</span></label>
+        <label><input type="radio" name="fmt" value="txt"><span>텍스트</span></label>
+      </fieldset>
+      <label class="switch"><input type="checkbox" id="with-profile" checked><span>이름·소개 포함</span></label>
+      <p class="gap-warn" id="gap-warn" hidden></p>
+      <textarea id="output" readonly spellcheck="false" aria-label="추출 결과"></textarea>
+      <div class="drawer-actions">
+        <button type="button" class="btn primary" id="copy">복사</button>
+        <button type="button" class="btn" id="download">파일로 저장</button>
+        <button type="button" class="btn ghost" id="clear-sel">선택 해제</button>
+      </div>
+      <div class="cli">
+        <span>같은 결과를 CLI로</span>
+        <code id="cli"></code>
+      </div>
+    </div>
+  </aside>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="dist/portfolio.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>
