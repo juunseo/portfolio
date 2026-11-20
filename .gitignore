@@ -5,7 +5,7 @@ out/
 private/
 *동료평가*
 
-# 캡스톤 원본 폴더: 로컬 보관, 내용 요약은 data/projects.json의 materials에 기록
+# 캡스톤 원본 폴더: 로컬 보관 (git 제외)
 /nd1_capstone_*/
 /ND3_*/
 
