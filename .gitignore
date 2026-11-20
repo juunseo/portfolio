@@ -9,6 +9,9 @@ private/
 /nd1_capstone_*/
 /ND3_*/
 
+# 로컬 설치한 Claude 스킬·도구 (외부 저장소 career-portfolio-kit, 재배포하지 않음)
+/.claude/
+
 # 편집 서버 임시 파일
 *.part
 data/.*.tmp
