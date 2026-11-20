@@ -95,7 +95,8 @@
     "tags": ["ROS 2", "Nav2", "AMCL", "Gazebo", "TurtleBot3", "LLM", "Groq API", "상태머신(FSM)", "Python"],
     "roles": ["robotics", "autonomy", "llm", "eval"],
     "links": [
-      { "label": "GitHub 팀 저장소", "url": "https://github.com/boseon25/capstone_team3" },
+      { "label": "GitHub (내 저장소)", "url": "https://github.com/juunseo/capstone_team3" },
+      { "label": "GitHub 팀 원본 저장소", "url": "https://github.com/boseon25/capstone_team3" },
       { "label": "시연 영상 (Google Drive)", "url": "https://drive.google.com/drive/folders/1dNTDRravAHDpeVM6yv4RLfx1ZmiWcdDK" }
     ],
     "attachments": [],
@@ -197,7 +198,8 @@
     "tags": ["ROS 2", "Nav2", "SLAM", "AMCL", "Gazebo", "Unitree Go2", "YOLO11n", "RGB-D", "LiDAR", "Python"],
     "roles": ["robotics", "autonomy", "vision", "eval"],
     "links": [
-      { "label": "GitHub 저장소", "url": "https://github.com/boseon25/go2-cave-slam-nav2" }
+      { "label": "GitHub (내 저장소)", "url": "https://github.com/juunseo/go2-cave-slam-nav2" },
+      { "label": "GitHub 팀 원본 저장소", "url": "https://github.com/boseon25/go2-cave-slam-nav2" }
     ],
     "attachments": [],
     "todo": ["팀 인원과 내 역할 명칭 확인", "시작월 입력", "시연 영상 첨부 또는 링크 추가"]
