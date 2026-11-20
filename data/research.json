@@ -1,0 +1,24 @@
+[
+  {
+    "id": "RES-01",
+    "type": "research",
+    "status": "template",
+    "kind": "[학부연구생 / 논문 / 학회 발표 / 논문 재현]",
+    "title": "[연구 주제]",
+    "org": "[연구실·지도교수]",
+    "period": { "start": "[YYYY-MM]", "end": "[YYYY-MM]", "note": "" },
+    "question": "[한 학기 안에 답할 수 있는 크기의 연구 물음 한 줄]",
+    "method": "[비교 대상, 고정 조건과 바꾼 조건, 반복 횟수]",
+    "result": "[직접 잰 결과 숫자와 측정 기준]",
+    "limits": "[방법이 통하지 않은 조건]",
+    "summary": {
+      "line": "[연구 주제] ([소속], [YYYY.MM])",
+      "short": ""
+    },
+    "publication": "[학회·저널명, 저자 순서, 게재 여부]",
+    "tags": [],
+    "roles": ["research"],
+    "links": [],
+    "todo": ["연구 경험 입력. 없으면 논문 결과 재현 1건부터 기록"]
+  }
+]

@@ -1,0 +1,19 @@
+[
+  {
+    "id": "AWD-01",
+    "type": "award",
+    "status": "template",
+    "title": "[대회명] [상훈]",
+    "org": "[주최·주관 기관]",
+    "rank": "[대상 / 최우수상 / 우수상 / 장려상]",
+    "period": { "start": "[YYYY-MM]", "end": "[YYYY-MM]", "note": "" },
+    "project_ref": "[관련 프로젝트 ID, 예: PRJ-VACCINE]",
+    "summary": {
+      "line": "[대회명] [상훈] ([주최 기관], [YYYY.MM])",
+      "short": "[출품작 한 줄과 본인 역할]"
+    },
+    "tags": [],
+    "roles": [],
+    "todo": ["수상 내역 입력. 관련 프로젝트가 있으면 project_ref에 PRJ ID 연결"]
+  }
+]
