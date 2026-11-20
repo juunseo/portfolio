@@ -107,6 +107,7 @@
     link: '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M8 12l4-4M9 5.5l1.2-1.2a3.2 3.2 0 0 1 4.5 4.5L13.5 10M11 14.5l-1.2 1.2a3.2 3.2 0 0 1-4.5-4.5L6.5 10"/></svg>',
     doc: '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6 2.5h5.5L15 6v11.5H6zM11 2.5V6.5h4"/></svg>',
     play: '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7.5 5.5v9l7-4.5z" fill="currentColor" stroke="none"/></svg>',
+    image: '<svg viewBox="0 0 20 20" aria-hidden="true"><rect x="2.5" y="4" width="15" height="12" rx="2"/><circle cx="7.5" cy="8.5" r="1.5"/><path d="m3 14.5 4.5-4 3.5 3 2.5-2 3.5 3"/></svg>',
     sun: '<svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="3.5"/><path d="M10 1.5v2M10 16.5v2M1.5 10h2M16.5 10h2M4 4l1.4 1.4M14.6 14.6 16 16M4 16l1.4-1.4M14.6 5.4 16 4"/></svg>',
     moon: '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M16 12.5A6.5 6.5 0 0 1 7.5 4a6.5 6.5 0 1 0 8.5 8.5z"/></svg>',
     auto: '<svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7"/><path d="M10 3a7 7 0 0 1 0 14z" fill="currentColor" stroke="none"/></svg>',
@@ -305,7 +306,10 @@
     const flags = [];
     if (rec.status !== "confirmed") flags.push(`<span class="badge ${rec.status}">${esc(T.status[rec.status]?.label || rec.status)}</span>`);
     flags.push(`<button type="button" class="id-chip" data-copy="${esc(rec.id)}" title="ID 복사">${esc(rec.id)}</button>`);
-    if (state.editable) flags.push(`<button type="button" class="btn sm edit-btn" data-edit="${esc(rec.id)}">편집</button>`);
+    if (state.editable) {
+      flags.push(`<button type="button" class="btn sm edit-btn" data-edit="${esc(rec.id)}" data-jump="att">사진·파일</button>`);
+      flags.push(`<button type="button" class="btn sm edit-btn" data-edit="${esc(rec.id)}">편집</button>`);
+    }
     const pick = `<input type="checkbox" class="pick" data-pick="${esc(rec.id)}" aria-label="${esc(rec.title)} 추출 대상에 넣기" ${state.selected.has(rec.id) ? "checked" : ""}>`;
     return `
       <div class="card-top">
@@ -841,7 +845,7 @@
     return rec;
   }
 
-  function openRecordEditor(type, id) {
+  function openRecordEditor(type, id, jumpToAttachments = false) {
     const rec = id ? byId[id] : null;
     Object.assign(ed, {
       open: true, mode: "record", type, isNew: !rec, originalId: rec ? rec.id : "",
@@ -851,7 +855,16 @@
     $("#editor-title").textContent = `${T.types[type].label} ${rec ? "편집" : "추가"}`;
     $("#editor-delete").hidden = !rec;
     renderEditorForm();
-    showEditor(true);
+    showEditor(true, !jumpToAttachments);
+    if (jumpToAttachments) setTimeout(jumpToDropzone, 80);
+  }
+
+  function jumpToDropzone() {
+    const zone = $("#dropzone");
+    if (!zone) return;
+    zone.scrollIntoView({ behavior: "smooth", block: "center" });
+    zone.classList.add("flash");
+    setTimeout(() => zone.classList.remove("flash"), 1200);
   }
 
   function openProfileEditor() {
@@ -862,7 +875,7 @@
     showEditor(true);
   }
 
-  function showEditor(open) {
+  function showEditor(open, focusFirst = true) {
     const el = $("#editor");
     el.classList.toggle("open", open);
     el.setAttribute("aria-hidden", String(!open));
@@ -870,7 +883,7 @@
     document.body.classList.toggle("editing", open);
     if (open) {
       $("#editor-form").scrollTop = 0;
-      setTimeout(() => $("#editor-form").querySelector("input:not([type=checkbox]):not([type=file]), textarea")?.focus(), 60);
+      if (focusFirst) setTimeout(() => $("#editor-form").querySelector("input:not([type=checkbox]):not([type=file]):not([readonly]), textarea")?.focus({ preventScroll: true }), 60);
     }
   }
 
@@ -954,16 +967,15 @@
   }
 
   function attachmentSectionHTML() {
-    if (ed.isNew) {
-      return `<section class="att-editor"><h3 class="form-h">사진·영상·파일</h3><p class="fld-hint">처음 한 번 저장하면 바로 이어서 첨부할 수 있습니다.</p></section>`;
-    }
+    const newNote = ed.isNew ? "<p class=\"fld-hint\">첫 파일을 올리면 위의 ID가 고정됩니다. 저장하지 않고 닫으면 올린 파일도 함께 지워집니다.</p>" : "";
     return `
-      <section class="att-editor">
+      <section class="att-editor" id="att-section">
         <h3 class="form-h">사진·영상·파일</h3>
         <div class="dropzone" id="dropzone">
-          <p><b>파일을 여기로 끌어오기</b> 또는 <label class="linklike">파일 선택<input type="file" id="att-input" multiple hidden></label></p>
-          <p class="fld-hint">사진·영상은 본문에 썸네일로, hwp·docx·pdf 같은 문서는 첨부 파일로 표시. 파일당 ${fmtSize(state.maxUpload)}까지</p>
+          <p><b>사진·영상·파일을 여기로 끌어오기</b> 또는 <label class="linklike">파일 선택<input type="file" id="att-input" multiple hidden></label></p>
+          <p class="fld-hint">사진·영상은 본문에 썸네일로, hwp·docx·pdf 같은 문서는 첨부 파일로 표시. 여러 개 한 번에 가능, 파일당 ${fmtSize(state.maxUpload)}까지</p>
         </div>
+        ${newNote}
         <div class="att-link">
           <input type="url" id="att-url" placeholder="큰 영상은 유튜브·드라이브 링크로 https://" aria-label="링크 주소">
           <input type="text" id="att-url-name" placeholder="이름 (선택)" aria-label="링크 이름">
@@ -979,8 +991,9 @@
     if (ed.mode === "record") {
       const prefix = T.types[ed.type].prefix;
       html += ed.isNew
-        ? `<div class="fld"><label class="fld-label" for="f-id">ID</label><input id="f-id" type="text" value="${esc(ed.draft.id)}" data-id spellcheck="false" autocomplete="off"><p class="fld-hint">${esc(prefix)}-로 시작하는 영문 대문자·숫자. 저장 후에는 바뀌지 않음 (첨부 폴더 이름으로 사용)</p></div>`
+        ? `<div class="fld"><label class="fld-label" for="f-id">ID</label><input id="f-id" type="text" value="${esc(ed.draft.id)}" data-id spellcheck="false" autocomplete="off"><p class="fld-hint" id="f-id-hint">${esc(prefix)}-로 시작하는 영문 대문자·숫자. 저장 후에는 바뀌지 않음 (첨부 폴더 이름으로 사용)</p></div>`
         : `<div class="fld"><span class="fld-label">ID</span><p class="fld-static"><code>${esc(ed.draft.id)}</code></p></div>`;
+      html += `<button type="button" class="att-jump" data-jump-att>${icon.image}<span>사진·영상·파일 추가</span><small>${ed.draft.attachments.length ? `${ed.draft.attachments.length}개 첨부됨` : "아래 첨부 칸으로 이동"}</small></button>`;
     }
     html += currentFields().map((f) => fieldHTML(f, f.key ? getPath(ed.draft, f.key) : undefined)).join("");
     form.innerHTML = html;
@@ -1004,6 +1017,8 @@
     const list = $("#att-list");
     if (!list) return;
     const atts = ed.draft.attachments;
+    const jumpNote = $("#editor-form [data-jump-att] small");
+    if (jumpNote) jumpNote.textContent = atts.length ? `${atts.length}개 첨부됨` : "아래 첨부 칸으로 이동";
     if (!atts.length) {
       list.innerHTML = '<li class="att-empty">아직 첨부한 파일이 없습니다.</li>';
       return;
@@ -1069,8 +1084,32 @@
     });
   }
 
+  /* 새 항목은 첫 업로드 때 ID를 확정·고정 (첨부 폴더 이름이 되므로) */
+  function uploadId() {
+    if (!ed.isNew) return ed.draft.id;
+    const input = $("#f-id");
+    const prefix = T.types[ed.type].prefix;
+    const id = input.value.trim().toUpperCase();
+    if (!new RegExp(`^${prefix}-[A-Z0-9][A-Z0-9-]{0,40}$`).test(id)) {
+      toast(`ID를 ${prefix}-01처럼 먼저 정해 주세요`, 3000);
+      input.focus();
+      return "";
+    }
+    if (byId[id]) {
+      toast(`${id}는 이미 있는 ID입니다. 다른 ID로 바꿔 주세요`, 3000);
+      input.focus();
+      return "";
+    }
+    input.value = id;
+    input.readOnly = true;
+    $("#f-id-hint").textContent = "첨부 파일을 올려서 ID가 고정되었습니다.";
+    ed.draft.id = id;
+    return id;
+  }
+
   async function addFiles(fileList) {
-    const id = ed.draft.id;
+    const id = uploadId();
+    if (!id) return;
     for (const file of [...fileList]) {
       if (file.size > state.maxUpload) {
         toast(`${file.name}: ${fmtSize(state.maxUpload)} 초과. 유튜브·드라이브 링크로 첨부해 주세요`, 4000);
@@ -1246,14 +1285,9 @@
       renderAll();
       const warns = res.warnings || [];
       const note = warns.length ? ` · 확인할 것 ${warns.length}건: ${warns[0].replace(/^[^ ]+ /, "")}` : "";
-      if (ed.mode === "record" && ed.isNew) {
-        openRecordEditor(ed.type, draft.id);
-        toast(`저장했습니다. 이제 사진·파일을 첨부할 수 있습니다${note}`, 3600);
-        setTimeout(() => $("#dropzone")?.scrollIntoView({ behavior: "smooth", block: "center" }), 120);
-      } else {
-        await closeEditor(true);
-        toast(`저장했습니다${note}`, warns.length ? 4200 : 2000);
-      }
+      await closeEditor(true);
+      toast(`저장했습니다${note}`, warns.length ? 4200 : 2000);
+      if (draft.id) setTimeout(() => document.getElementById(draft.id)?.scrollIntoView({ behavior: "smooth", block: "start" }), 120);
     } catch (e) {
       showError(e);
     } finally {
@@ -1311,6 +1345,7 @@
       if (e.key === "Enter" && e.target.id === "att-url") { e.preventDefault(); addLink(); }
     });
     form.addEventListener("click", (e) => {
+      if (e.target.closest("[data-jump-att]")) return jumpToDropzone();
       const addRow = e.target.closest("[data-add-row]");
       if (addRow) {
         const f = currentFields().find((x) => x.key === addRow.dataset.addRow);
@@ -1396,7 +1431,7 @@
       const view = e.target.closest("[data-view]");
       if (view) return openViewer(view.dataset.view, Number(view.dataset.index));
       const edit = e.target.closest("[data-edit]");
-      if (edit) return openRecordEditor(byId[edit.dataset.edit].type, edit.dataset.edit);
+      if (edit) return openRecordEditor(byId[edit.dataset.edit].type, edit.dataset.edit, edit.dataset.jump === "att");
       const add = e.target.closest("[data-add]");
       if (add) return openRecordEditor(add.dataset.add);
       if (e.target.closest("[data-edit-profile]")) return openProfileEditor();
