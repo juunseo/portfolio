@@ -279,7 +279,7 @@
       })
       .join("");
     const modules = (rec.modules || [])
-      .map((m) => `<li><b>${esc(m.name)}</b>${m.hours ? ` <span class="muted">${m.hours}시간</span>` : ""}<br><span class="muted">${mark(m.detail || "")}</span></li>`)
+      .map((m) => `<li><b>${esc(m.name)}</b>${m.hours ? ` <span class="muted">${m.hours}시간</span>` : ""}${m.detail ? `<br><span class="muted">${mark(m.detail)}</span>` : ""}</li>`)
       .join("");
     const courses = (rec.courses || []).length ? `<p class="prose"><b>관련 과목</b> ${rec.courses.map(mark).join(", ")}</p>` : "";
     const short = rec.summary.short ? `<p class="short">${mark(rec.summary.short)}</p>` : "";
@@ -455,7 +455,7 @@
         if (rec.tags?.length) w.p(`기술: ${rec.tags.join(", ")}`);
         if (full && rec.links?.length) w.p(`링크: ${rec.links.map((l) => `${l.label} ${l.url}`).join(" · ")}`);
       } else {
-        (rec.modules || []).forEach((m) => w.li(`${m.name}${m.hours ? ` (${m.hours}시간)` : ""}: ${m.detail || ""}`));
+        (rec.modules || []).forEach((m) => w.li(`${m.name}${m.hours ? ` (${m.hours}시간)` : ""}${m.detail ? `: ${m.detail}` : ""}`));
         if (rec.courses?.length) w.li(`관련 과목: ${rec.courses.join(", ")}`);
         if (rec.type === "research" && state.detail === "full") {
           [["question", "연구 물음"], ["method", "방법"], ["result", "결과"], ["limits", "한계"]].forEach(([k, n]) => w.li(`${n}: ${rec[k] || ""}`));

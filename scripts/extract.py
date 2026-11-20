@@ -6,7 +6,7 @@
     python scripts/extract.py --type project --detail short
     python scripts/extract.py --role autonomy --detail full --out out/autonomy.md
     python scripts/extract.py --tag Nav2,YOLO11n --detail line
-    python scripts/extract.py --ids PRJ-CAVE --detail full --format txt
+    python scripts/extract.py --ids PRJ-01 --detail full --format txt
     python scripts/extract.py --target TGT-HYUNDAI-ROBOTICS --profile
 
 규칙
@@ -205,7 +205,8 @@ def render_generic(w: Writer, rec: dict, detail: str):
     w.p(rec["summary"].get("short") or rec["summary"]["line"])
     for m in rec.get("modules", []):
         hours = f" ({m['hours']}시간)" if m.get("hours") else ""
-        w.li(f"{m['name']}{hours}: {m.get('detail', '')}")
+        detail = m.get("detail", "")
+        w.li(f"{m['name']}{hours}: {detail}" if detail else f"{m['name']}{hours}")
     if rec.get("courses"):
         w.li("관련 과목: " + ", ".join(rec["courses"]))
     if rec["type"] == "research" and detail == "full":
