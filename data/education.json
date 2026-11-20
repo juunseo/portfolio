@@ -1,1 +1,37 @@
-[]
+[
+  {
+    "id": "EDU-01",
+    "type": "education",
+    "status": "confirmed",
+    "title": "기본 학력사항",
+    "org": "전주대학교",
+    "period": {
+      "start": "2022-03",
+      "end": "2026-11",
+      "note": "재학 중"
+    },
+    "summary": {
+      "line": "",
+      "short": ""
+    },
+    "tags": [
+      "ROS2",
+      "Python",
+      "isaacsim",
+      "simulation",
+      "Gazebo",
+      "Mujoco",
+      "VLA",
+      "LLM"
+    ],
+    "roles": [],
+    "links": [],
+    "attachments": [],
+    "todo": [],
+    "degree": "학사",
+    "major": "인공지능학과",
+    "minor": "",
+    "gpa": "4.33",
+    "courses": []
+  }
+]
