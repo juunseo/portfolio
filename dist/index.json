@@ -5,34 +5,328 @@
     "training": 0,
     "military": 0,
     "award": 0,
-    "project": 0,
+    "project": 2,
     "research": 0
   },
   "attachments": 0,
-  "records": [],
+  "records": [
+    {
+      "id": "PRJ-CAVE",
+      "type": "project",
+      "status": "draft",
+      "title": "동굴 재난 탐사·조난자 탐지 로봇",
+      "org": "전주대 피지컬 AI 나노디그리 ND3 캡스톤 · 팀 멍멍",
+      "period": "~ 2026.11",
+      "line": "Gazebo 동굴 월드에서 Unitree Go2로 지도를 만들고 자율주행하며, 카메라로 찾은 조난자의 지도 좌표를 산출하는 ROS 2 시스템",
+      "tags": [
+        "ROS 2",
+        "Nav2",
+        "SLAM",
+        "AMCL",
+        "Gazebo",
+        "Unitree Go2",
+        "YOLO11n",
+        "RGB-D",
+        "LiDAR",
+        "Python"
+      ],
+      "roles": [
+        "robotics",
+        "autonomy",
+        "vision",
+        "eval"
+      ],
+      "attachments": 0,
+      "gaps": 3
+    },
+    {
+      "id": "PRJ-VACCINE",
+      "type": "project",
+      "status": "draft",
+      "title": "병원 백신 배달 로봇",
+      "org": "전주대 피지컬 AI 나노디그리 ND1 캡스톤 · 팀 Vaccine",
+      "period": "~ 2026.07 (발표 2026.07.03)",
+      "line": "\"301호 환자에게 A형 독감 백신 가져다줘\" 한 문장으로 약국 픽업부터 병실 배달까지 수행하는 ROS 2 로봇 시뮬레이션",
+      "tags": [
+        "ROS 2",
+        "Nav2",
+        "AMCL",
+        "Gazebo",
+        "TurtleBot3",
+        "LLM",
+        "Groq API",
+        "상태머신(FSM)",
+        "Python"
+      ],
+      "roles": [
+        "robotics",
+        "autonomy",
+        "llm",
+        "eval"
+      ],
+      "attachments": 0,
+      "gaps": 2
+    }
+  ],
   "by_type": {
     "education": [],
     "training": [],
     "military": [],
     "award": [],
-    "project": [],
+    "project": [
+      "PRJ-CAVE",
+      "PRJ-VACCINE"
+    ],
     "research": []
   },
   "by_role": {
     "research": [],
-    "robotics": [],
-    "autonomy": [],
-    "vision": [],
-    "llm": [],
-    "eval": []
+    "robotics": [
+      "PRJ-CAVE",
+      "PRJ-VACCINE"
+    ],
+    "autonomy": [
+      "PRJ-CAVE",
+      "PRJ-VACCINE"
+    ],
+    "vision": [
+      "PRJ-CAVE"
+    ],
+    "llm": [
+      "PRJ-VACCINE"
+    ],
+    "eval": [
+      "PRJ-CAVE",
+      "PRJ-VACCINE"
+    ]
   },
   "by_status": {
     "confirmed": [],
-    "draft": [],
+    "draft": [
+      "PRJ-CAVE",
+      "PRJ-VACCINE"
+    ],
     "template": []
   },
-  "by_year": {},
-  "by_tag": {},
-  "skills": [],
-  "todo": []
+  "by_year": {
+    "2026": [
+      "PRJ-CAVE",
+      "PRJ-VACCINE"
+    ]
+  },
+  "by_tag": {
+    "amcl": {
+      "label": "AMCL",
+      "ids": [
+        "PRJ-CAVE",
+        "PRJ-VACCINE"
+      ]
+    },
+    "gazebo": {
+      "label": "Gazebo",
+      "ids": [
+        "PRJ-CAVE",
+        "PRJ-VACCINE"
+      ]
+    },
+    "groqapi": {
+      "label": "Groq API",
+      "ids": [
+        "PRJ-VACCINE"
+      ]
+    },
+    "lidar": {
+      "label": "LiDAR",
+      "ids": [
+        "PRJ-CAVE"
+      ]
+    },
+    "llm": {
+      "label": "LLM",
+      "ids": [
+        "PRJ-VACCINE"
+      ]
+    },
+    "nav2": {
+      "label": "Nav2",
+      "ids": [
+        "PRJ-CAVE",
+        "PRJ-VACCINE"
+      ]
+    },
+    "python": {
+      "label": "Python",
+      "ids": [
+        "PRJ-CAVE",
+        "PRJ-VACCINE"
+      ]
+    },
+    "rgbd": {
+      "label": "RGB-D",
+      "ids": [
+        "PRJ-CAVE"
+      ]
+    },
+    "ros2": {
+      "label": "ROS 2",
+      "ids": [
+        "PRJ-CAVE",
+        "PRJ-VACCINE"
+      ]
+    },
+    "slam": {
+      "label": "SLAM",
+      "ids": [
+        "PRJ-CAVE"
+      ]
+    },
+    "turtlebot3": {
+      "label": "TurtleBot3",
+      "ids": [
+        "PRJ-VACCINE"
+      ]
+    },
+    "unitreego2": {
+      "label": "Unitree Go2",
+      "ids": [
+        "PRJ-CAVE"
+      ]
+    },
+    "yolo11n": {
+      "label": "YOLO11n",
+      "ids": [
+        "PRJ-CAVE"
+      ]
+    },
+    "상태머신fsm": {
+      "label": "상태머신(FSM)",
+      "ids": [
+        "PRJ-VACCINE"
+      ]
+    }
+  },
+  "skills": [
+    {
+      "label": "AMCL",
+      "count": 2,
+      "ids": [
+        "PRJ-CAVE",
+        "PRJ-VACCINE"
+      ]
+    },
+    {
+      "label": "Gazebo",
+      "count": 2,
+      "ids": [
+        "PRJ-CAVE",
+        "PRJ-VACCINE"
+      ]
+    },
+    {
+      "label": "Nav2",
+      "count": 2,
+      "ids": [
+        "PRJ-CAVE",
+        "PRJ-VACCINE"
+      ]
+    },
+    {
+      "label": "Python",
+      "count": 2,
+      "ids": [
+        "PRJ-CAVE",
+        "PRJ-VACCINE"
+      ]
+    },
+    {
+      "label": "ROS 2",
+      "count": 2,
+      "ids": [
+        "PRJ-CAVE",
+        "PRJ-VACCINE"
+      ]
+    },
+    {
+      "label": "Groq API",
+      "count": 1,
+      "ids": [
+        "PRJ-VACCINE"
+      ]
+    },
+    {
+      "label": "LiDAR",
+      "count": 1,
+      "ids": [
+        "PRJ-CAVE"
+      ]
+    },
+    {
+      "label": "LLM",
+      "count": 1,
+      "ids": [
+        "PRJ-VACCINE"
+      ]
+    },
+    {
+      "label": "RGB-D",
+      "count": 1,
+      "ids": [
+        "PRJ-CAVE"
+      ]
+    },
+    {
+      "label": "SLAM",
+      "count": 1,
+      "ids": [
+        "PRJ-CAVE"
+      ]
+    },
+    {
+      "label": "TurtleBot3",
+      "count": 1,
+      "ids": [
+        "PRJ-VACCINE"
+      ]
+    },
+    {
+      "label": "Unitree Go2",
+      "count": 1,
+      "ids": [
+        "PRJ-CAVE"
+      ]
+    },
+    {
+      "label": "YOLO11n",
+      "count": 1,
+      "ids": [
+        "PRJ-CAVE"
+      ]
+    },
+    {
+      "label": "상태머신(FSM)",
+      "count": 1,
+      "ids": [
+        "PRJ-VACCINE"
+      ]
+    }
+  ],
+  "todo": [
+    {
+      "id": "PRJ-CAVE",
+      "title": "동굴 재난 탐사·조난자 탐지 로봇",
+      "items": [
+        "팀 인원과 내 역할 명칭 확인",
+        "시작월 입력",
+        "시연 영상 첨부 또는 링크 추가"
+      ]
+    },
+    {
+      "id": "PRJ-VACCINE",
+      "title": "병원 백신 배달 로봇",
+      "items": [
+        "시작월 입력",
+        "직접 잰 수치 추가 (배달 1회 소요 시간 등)"
+      ]
+    }
+  ]
 }

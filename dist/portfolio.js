@@ -118,7 +118,365 @@ window.PORTFOLIO = {
    }
   }
  },
- "records": [],
+ "records": [
+  {
+   "id": "PRJ-CAVE",
+   "type": "project",
+   "status": "draft",
+   "title": "동굴 재난 탐사·조난자 탐지 로봇",
+   "subtitle": "사족보행 로봇 Go2로 지도 작성, 자율주행, 조난자 위치 산출을 잇는 구조 로봇 시뮬레이션",
+   "org": "전주대 피지컬 AI 나노디그리 ND3 캡스톤 · 팀 멍멍",
+   "period": {
+    "start": "",
+    "end": "2026-11",
+    "note": ""
+   },
+   "team": {
+    "size": null,
+    "my_role": "자율주행·인지 파이프라인 통합"
+   },
+   "summary": {
+    "line": "Gazebo 동굴 월드에서 Unitree Go2로 지도를 만들고 자율주행하며, 카메라로 찾은 조난자의 지도 좌표를 산출하는 ROS 2 시스템",
+    "short": "2D LiDAR SLAM으로 지도 작성, Nav2로 목표 지점 이동, YOLO11n 탐지 결과를 depth·카메라 파라미터·TF와 결합해 조난자 map 좌표 발행. 1m 이내 접근 시 자동 정지."
+   },
+   "problem": "동굴·갱도 붕괴 현장은 구조대 진입이 위험하고 통신·GPS가 끊겨 위치 파악부터 어려운 환경. 바위·단차가 많아 바퀴형 로봇 주행도 제한적.",
+   "goal": "카메라 픽셀 → 거리 → 로봇 기준 좌표 → 지도 좌표로 변환해 구조대가 찾아갈 수 있는 조난자 위치 산출",
+   "architecture": [
+    "Gazebo 동굴 월드 + Go2(2D·3D LiDAR, RGB-D 카메라)",
+    "slam_toolbox 라이브 매핑 / 저장 지도 + AMCL 중 선택",
+    "YOLO11n 사람 탐지 → depth 거리 → TF·로봇 위치 결합 → /survivor_position",
+    "RViz 목표점 → Nav2 경로 계획 → CHAMP 보행 제어"
+   ],
+   "my_work": [
+    {
+     "text": "오픈소스 3종(동굴 월드, CHAMP 기반 Go2, 생존자 탐지)을 한 워크스페이스로 이식·통합",
+     "roles": [
+      "robotics"
+     ]
+    },
+    {
+     "text": "라이브 SLAM과 저장 지도 + AMCL을 독립 launch로 분리, 반복 실험은 저장 지도로 조건 고정",
+     "roles": [
+      "autonomy"
+     ]
+    },
+    {
+     "text": "조난자 위치 계산: 박스 중앙 30% 영역의 depth 중앙값으로 거리 추정 후 카메라 파라미터·TF·로봇 위치로 지도 좌표 산출",
+     "roles": [
+      "vision"
+     ]
+    },
+    {
+     "text": "3프레임 연속 탐지 + 1m 이내 접근 시 자동 정지 로직 구현",
+     "roles": [
+      "robotics",
+      "vision"
+     ]
+    },
+    {
+     "text": "RViz 목표점 지정 → Nav2 경로 계획·장애물 감지 시 재계획 흐름 구성",
+     "roles": [
+      "autonomy"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "metric": "E2E 검증 완료",
+     "text": "탐지 → 좌표 계산 → 발행 → 1m 이내 자동 정지 전 과정을 조난자 모형으로 확인"
+    },
+    {
+     "metric": "좌표 오차 1m 이내",
+     "text": "모형 중심 기준 수십 cm ~ 1m (눕거나 기댄 자세에서 증가)"
+    },
+    {
+     "metric": "2개 모드 동작",
+     "text": "라이브 SLAM, 저장 지도 기반 자율주행 모두 정상"
+    }
+   ],
+   "troubleshooting": [
+    {
+     "title": "튜닝값 미반영",
+     "problem": "코스트맵을 고쳐도 동작이 그대로, 오류 메시지 없음",
+     "cause": "launch가 params_file을 넘기지 않아 기본값으로 조용히 폴백",
+     "fix": "params_file 전달, 실행 시 파라미터 로딩 여부부터 확인하는 절차 도입",
+     "result": "튜닝값 정상 반영",
+     "roles": [
+      "autonomy"
+     ]
+    },
+    {
+     "title": "바닥을 장애물로 인식",
+     "problem": "로봇 바로 앞을 항상 막힌 것으로 판단해 경로 계획 실패",
+     "cause": "3D LiDAR 하단 채널의 바닥 반사점을 장애물로 표시 (min_obstacle_height 0.0)",
+     "fix": "min_obstacle_height 0.0 → 0.08",
+     "result": "경로 계획 정상화",
+     "roles": [
+      "autonomy"
+     ]
+    },
+    {
+     "title": "위치 추정 수 미터 이탈",
+     "problem": "RViz 위치와 실제 위치가 수 미터 차이",
+     "cause": "AMCL 기본 노이즈 설정(alpha 0.2)이 드리프트 큰 실제 로봇 기준",
+     "fix": "alpha1~5를 0.02로 낮춰 오도메트리 신뢰도 상향",
+     "result": "위치 이탈 해소",
+     "roles": [
+      "autonomy"
+     ]
+    }
+   ],
+   "decisions": [
+    {
+     "choice": "바퀴형 대신 사족보행 Go2",
+     "reason": "바위·단차·경사 지형에서 주행 가능성이 더 높음"
+    },
+    {
+     "choice": "드론 모델 폐기, Go2로 일원화",
+     "reason": "불규칙한 지형 고도와 장애물로 드론 자율 탐색 결과 미달, 기간 안에 보완 어려움"
+    },
+    {
+     "choice": "완전 자율 탐사 대신 목표점 지정 + 자율주행",
+     "reason": "explore_lite 도달 오판정 버그와 지형으로 인한 지도 틀어짐"
+    }
+   ],
+   "stack": [],
+   "lessons": [
+    "튜닝이 안 먹히면 값보다 파일이 실제로 로드되는지부터 확인하는 순서"
+   ],
+   "next": [
+    "explore_lite 버그 해결 후 완전 자율 매핑",
+    "조난자까지 A* · Theta* · RRT* 경로계획 비교",
+    "시뮬레이션 전용 오도메트리를 EKF·LiDAR odometry로 교체 (실기체 대비)"
+   ],
+   "materials": [
+    {
+     "label": "발표자료 (12쪽)",
+     "detail": "배경(동굴 조난 사례), 목표, 주요 기술, 3차원 위치 계산·좌표 변환 단계, 한계와 재구성, 내비게이션, 시연"
+    },
+    {
+     "label": "프로젝트 요약 (6쪽)",
+     "detail": "아키텍처, 좌표 체계, 개발 이슈 10건과 해결, 검증 상태, 실행 절차"
+    },
+    {
+     "label": "시연 영상",
+     "detail": "자율주행과 조난자 탐지·자동 정지 (webm 2개)"
+    }
+   ],
+   "tags": [
+    "ROS 2",
+    "Nav2",
+    "SLAM",
+    "AMCL",
+    "Gazebo",
+    "Unitree Go2",
+    "YOLO11n",
+    "RGB-D",
+    "LiDAR",
+    "Python"
+   ],
+   "roles": [
+    "robotics",
+    "autonomy",
+    "vision",
+    "eval"
+   ],
+   "links": [
+    {
+     "label": "GitHub 저장소",
+     "url": "https://github.com/boseon25/go2-cave-slam-nav2"
+    }
+   ],
+   "attachments": [],
+   "todo": [
+    "팀 인원과 내 역할 명칭 확인",
+    "시작월 입력",
+    "시연 영상 첨부 또는 링크 추가"
+   ]
+  },
+  {
+   "id": "PRJ-VACCINE",
+   "type": "project",
+   "status": "draft",
+   "title": "병원 백신 배달 로봇",
+   "subtitle": "자연어 명령 한 줄로 혈액형별 백신을 배달하는 TurtleBot3 시뮬레이션",
+   "org": "전주대 피지컬 AI 나노디그리 ND1 캡스톤 · 팀 Vaccine",
+   "period": {
+    "start": "",
+    "end": "2026-07",
+    "note": "발표 2026.07.03"
+   },
+   "team": {
+    "size": 6,
+    "my_role": "ROS 2 · Nav2 연동"
+   },
+   "summary": {
+    "line": "\"301호 환자에게 A형 독감 백신 가져다줘\" 한 문장으로 약국 픽업부터 병실 배달까지 수행하는 ROS 2 로봇 시뮬레이션",
+    "short": "LLM이 자연어 명령을 mission JSON으로 바꾸고, 상태머신이 Nav2 이동과 Gazebo 픽업·배치를 차례로 실행하는 구조. 6인 팀에서 시뮬레이션 환경 구성, AMCL·Nav2 연동, 이동 흐름 검증 담당."
+   },
+   "problem": "로봇에게 일을 시키려면 좌표·토픽·액션 서버를 알아야 하고, 이동과 파지 명령이 따로 놀아 '백신 배달'이라는 하나의 흐름으로 이어지지 않는 상태.",
+   "goal": "혈액형 → 백신 종류 → 병실 번호를 자연어에서 해석해 약국 이동 → 픽업 → 병실 이동 → 배치를 사람 개입 없이 완료",
+   "architecture": [
+    "자연어 명령 → LLM 파서(실패 시 규칙 기반 폴백) → mission JSON",
+    "상태머신(FSM): 이동 → 픽업 → 이동 → 배치 → 완료, 단계별 재시도",
+    "Nav2 목표 좌표 이동 · Gazebo 텔레포트 방식 픽업·배치",
+    "고정 병원 지도 + AMCL 위치추정"
+   ],
+   "my_work": [
+    {
+     "text": "AWS RoboMaker Hospital World 도입, TurtleBot3 · Gazebo Classic 11 시뮬레이션 환경 구성",
+     "roles": [
+      "robotics"
+     ],
+     "mine": "shared"
+    },
+    {
+     "text": "map_server + AMCL + Nav2 연동, RViz 초기 위치 설정과 약국·병실 목표 이동 테스트",
+     "roles": [
+      "autonomy"
+     ],
+     "mine": "shared"
+    },
+    {
+     "text": "병원 지도 작성 시도(explore_lite, teleop). 긴 복도 누적 오차와 문틀 끼임 확인 후 고정 지도 + AMCL 방식으로 전환",
+     "roles": [
+      "autonomy"
+     ]
+    },
+    {
+     "text": "LLM 명령 입력과 시뮬레이션 연동, 명령부터 배치 완료까지 실제 이동 흐름 검증",
+     "roles": [
+      "robotics",
+      "llm",
+      "eval"
+     ]
+    }
+   ],
+   "results": [
+    {
+     "metric": "E2E 성공 2개 조합",
+     "text": "301호·A형, 302호·B형 명령 입력부터 배치 완료까지 전 과정 성공"
+    },
+    {
+     "metric": "LLM 장애 시 동작 유지",
+     "text": "API 키가 무효여도 규칙 기반 폴백 파서로 자동 전환"
+    },
+    {
+     "metric": "타임아웃 재현 0회",
+     "text": "픽업 응답 유실 원인 수정 이후 같은 증상 없음"
+    }
+   ],
+   "troubleshooting": [
+    {
+     "title": "픽업 응답 유실",
+     "problem": "약국 도착 후 /delete_entity 호출이 계속 타임아웃 (5초 → 20초로 늘려도 실패)",
+     "cause": "실제로는 삭제 완료 상태. 콜백 안에서 spin을 다시 돌리는 재진입 구조로 응답 미전달",
+     "fix": "future.add_done_callback 기반 비동기 구조로 재작성",
+     "result": "타임아웃 재현 0회",
+     "roles": [
+      "robotics"
+     ]
+    },
+    {
+     "title": "병원 지도 품질",
+     "problem": "실시간 SLAM 지도가 휘고 뒤틀리는 현상",
+     "cause": "긴 직선 복도의 누적 오차, 좁은 문틀 끼임",
+     "fix": "검증된 고정 지도 + map_server + AMCL 위치추정으로 전환",
+     "result": "위치추정 안정화, 배달 흐름 검증에 일정 집중",
+     "roles": [
+      "autonomy"
+     ]
+    },
+    {
+     "title": "Gazebo 화면 크래시",
+     "problem": "gzclient 실행 직후 종료",
+     "cause": "자동으로 붙는 단종 안내 플러그인(libgazebo_ros_eol_gui.so)과 카메라 초기화 충돌",
+     "fix": "플러그인 없이 gzclient를 직접 실행하도록 launch 수정",
+     "result": "크래시 해소",
+     "roles": [
+      "robotics"
+     ]
+    }
+   ],
+   "decisions": [
+    {
+     "choice": "실시간 SLAM 대신 고정 지도 + AMCL",
+     "reason": "좁은 병실 입구와 긴 복도에서 SLAM 품질 불안정. 위치추정만 하는 쪽이 가볍고 안정적"
+    },
+    {
+     "choice": "LLM + 규칙 기반 폴백",
+     "reason": "API 장애가 나도 같은 mission 형식을 유지해 뒤쪽 노드에 영향 없음"
+    },
+    {
+     "choice": "mission JSON 중간 계약",
+     "reason": "LLM은 명령 구조화만, 경로 계획과 장애물 회피는 Nav2가 맡도록 책임 분리"
+    }
+   ],
+   "stack": [],
+   "lessons": [
+    "타임아웃이 나면 대기 시간을 늘리기 전에 실제 상태부터 확인하는 순서"
+   ],
+   "next": [
+    "303호·AB형, 304호·O형 조합 검증과 회귀 테스트",
+    "여러 배달 요청의 큐잉·우선순위 처리",
+    "텔레포트 대신 로봇팔 실제 파지"
+   ],
+   "materials": [
+    {
+     "label": "기획서 (8쪽)",
+     "detail": "팀 역할, 요구사항 7개와 검증 방법, 3노드 구조, 30시간 개발 계획, 리스크 대비책"
+    },
+    {
+     "label": "결과보고서 (7쪽)",
+     "detail": "노드별 구현 현황, 실행 방법, E2E 증빙, 트러블슈팅, 회고"
+    },
+    {
+     "label": "발표자료 (12쪽)",
+     "detail": "배경(감염병 병동 물류), LLM·FSM 파트, 시뮬레이션 테스트·데모"
+    },
+    {
+     "label": "Runbook (2쪽)",
+     "detail": "빌드·실행 순서, 명령 발행, 증상별 조치"
+    },
+    {
+     "label": "시연 영상",
+     "detail": "명령 입력부터 배치 완료까지 (mp4 2개, webm 1개)"
+    }
+   ],
+   "tags": [
+    "ROS 2",
+    "Nav2",
+    "AMCL",
+    "Gazebo",
+    "TurtleBot3",
+    "LLM",
+    "Groq API",
+    "상태머신(FSM)",
+    "Python"
+   ],
+   "roles": [
+    "robotics",
+    "autonomy",
+    "llm",
+    "eval"
+   ],
+   "links": [
+    {
+     "label": "GitHub 팀 저장소",
+     "url": "https://github.com/boseon25/capstone_team3"
+    },
+    {
+     "label": "시연 영상 (Google Drive)",
+     "url": "https://drive.google.com/drive/folders/1dNTDRravAHDpeVM6yv4RLfx1ZmiWcdDK"
+    }
+   ],
+   "attachments": [],
+   "todo": [
+    "시작월 입력",
+    "직접 잰 수치 추가 (배달 1회 소요 시간 등)"
+   ]
+  }
+ ],
  "targets": [
   {
    "id": "TGT-TEMPLATE",
@@ -179,35 +537,329 @@ window.PORTFOLIO = {
    "training": 0,
    "military": 0,
    "award": 0,
-   "project": 0,
+   "project": 2,
    "research": 0
   },
   "attachments": 0,
-  "records": [],
+  "records": [
+   {
+    "id": "PRJ-CAVE",
+    "type": "project",
+    "status": "draft",
+    "title": "동굴 재난 탐사·조난자 탐지 로봇",
+    "org": "전주대 피지컬 AI 나노디그리 ND3 캡스톤 · 팀 멍멍",
+    "period": "~ 2026.11",
+    "line": "Gazebo 동굴 월드에서 Unitree Go2로 지도를 만들고 자율주행하며, 카메라로 찾은 조난자의 지도 좌표를 산출하는 ROS 2 시스템",
+    "tags": [
+     "ROS 2",
+     "Nav2",
+     "SLAM",
+     "AMCL",
+     "Gazebo",
+     "Unitree Go2",
+     "YOLO11n",
+     "RGB-D",
+     "LiDAR",
+     "Python"
+    ],
+    "roles": [
+     "robotics",
+     "autonomy",
+     "vision",
+     "eval"
+    ],
+    "attachments": 0,
+    "gaps": 3
+   },
+   {
+    "id": "PRJ-VACCINE",
+    "type": "project",
+    "status": "draft",
+    "title": "병원 백신 배달 로봇",
+    "org": "전주대 피지컬 AI 나노디그리 ND1 캡스톤 · 팀 Vaccine",
+    "period": "~ 2026.07 (발표 2026.07.03)",
+    "line": "\"301호 환자에게 A형 독감 백신 가져다줘\" 한 문장으로 약국 픽업부터 병실 배달까지 수행하는 ROS 2 로봇 시뮬레이션",
+    "tags": [
+     "ROS 2",
+     "Nav2",
+     "AMCL",
+     "Gazebo",
+     "TurtleBot3",
+     "LLM",
+     "Groq API",
+     "상태머신(FSM)",
+     "Python"
+    ],
+    "roles": [
+     "robotics",
+     "autonomy",
+     "llm",
+     "eval"
+    ],
+    "attachments": 0,
+    "gaps": 2
+   }
+  ],
   "by_type": {
    "education": [],
    "training": [],
    "military": [],
    "award": [],
-   "project": [],
+   "project": [
+    "PRJ-CAVE",
+    "PRJ-VACCINE"
+   ],
    "research": []
   },
   "by_role": {
    "research": [],
-   "robotics": [],
-   "autonomy": [],
-   "vision": [],
-   "llm": [],
-   "eval": []
+   "robotics": [
+    "PRJ-CAVE",
+    "PRJ-VACCINE"
+   ],
+   "autonomy": [
+    "PRJ-CAVE",
+    "PRJ-VACCINE"
+   ],
+   "vision": [
+    "PRJ-CAVE"
+   ],
+   "llm": [
+    "PRJ-VACCINE"
+   ],
+   "eval": [
+    "PRJ-CAVE",
+    "PRJ-VACCINE"
+   ]
   },
   "by_status": {
    "confirmed": [],
-   "draft": [],
+   "draft": [
+    "PRJ-CAVE",
+    "PRJ-VACCINE"
+   ],
    "template": []
   },
-  "by_year": {},
-  "by_tag": {},
-  "skills": [],
-  "todo": []
+  "by_year": {
+   "2026": [
+    "PRJ-CAVE",
+    "PRJ-VACCINE"
+   ]
+  },
+  "by_tag": {
+   "amcl": {
+    "label": "AMCL",
+    "ids": [
+     "PRJ-CAVE",
+     "PRJ-VACCINE"
+    ]
+   },
+   "gazebo": {
+    "label": "Gazebo",
+    "ids": [
+     "PRJ-CAVE",
+     "PRJ-VACCINE"
+    ]
+   },
+   "groqapi": {
+    "label": "Groq API",
+    "ids": [
+     "PRJ-VACCINE"
+    ]
+   },
+   "lidar": {
+    "label": "LiDAR",
+    "ids": [
+     "PRJ-CAVE"
+    ]
+   },
+   "llm": {
+    "label": "LLM",
+    "ids": [
+     "PRJ-VACCINE"
+    ]
+   },
+   "nav2": {
+    "label": "Nav2",
+    "ids": [
+     "PRJ-CAVE",
+     "PRJ-VACCINE"
+    ]
+   },
+   "python": {
+    "label": "Python",
+    "ids": [
+     "PRJ-CAVE",
+     "PRJ-VACCINE"
+    ]
+   },
+   "rgbd": {
+    "label": "RGB-D",
+    "ids": [
+     "PRJ-CAVE"
+    ]
+   },
+   "ros2": {
+    "label": "ROS 2",
+    "ids": [
+     "PRJ-CAVE",
+     "PRJ-VACCINE"
+    ]
+   },
+   "slam": {
+    "label": "SLAM",
+    "ids": [
+     "PRJ-CAVE"
+    ]
+   },
+   "turtlebot3": {
+    "label": "TurtleBot3",
+    "ids": [
+     "PRJ-VACCINE"
+    ]
+   },
+   "unitreego2": {
+    "label": "Unitree Go2",
+    "ids": [
+     "PRJ-CAVE"
+    ]
+   },
+   "yolo11n": {
+    "label": "YOLO11n",
+    "ids": [
+     "PRJ-CAVE"
+    ]
+   },
+   "상태머신fsm": {
+    "label": "상태머신(FSM)",
+    "ids": [
+     "PRJ-VACCINE"
+    ]
+   }
+  },
+  "skills": [
+   {
+    "label": "AMCL",
+    "count": 2,
+    "ids": [
+     "PRJ-CAVE",
+     "PRJ-VACCINE"
+    ]
+   },
+   {
+    "label": "Gazebo",
+    "count": 2,
+    "ids": [
+     "PRJ-CAVE",
+     "PRJ-VACCINE"
+    ]
+   },
+   {
+    "label": "Nav2",
+    "count": 2,
+    "ids": [
+     "PRJ-CAVE",
+     "PRJ-VACCINE"
+    ]
+   },
+   {
+    "label": "Python",
+    "count": 2,
+    "ids": [
+     "PRJ-CAVE",
+     "PRJ-VACCINE"
+    ]
+   },
+   {
+    "label": "ROS 2",
+    "count": 2,
+    "ids": [
+     "PRJ-CAVE",
+     "PRJ-VACCINE"
+    ]
+   },
+   {
+    "label": "Groq API",
+    "count": 1,
+    "ids": [
+     "PRJ-VACCINE"
+    ]
+   },
+   {
+    "label": "LiDAR",
+    "count": 1,
+    "ids": [
+     "PRJ-CAVE"
+    ]
+   },
+   {
+    "label": "LLM",
+    "count": 1,
+    "ids": [
+     "PRJ-VACCINE"
+    ]
+   },
+   {
+    "label": "RGB-D",
+    "count": 1,
+    "ids": [
+     "PRJ-CAVE"
+    ]
+   },
+   {
+    "label": "SLAM",
+    "count": 1,
+    "ids": [
+     "PRJ-CAVE"
+    ]
+   },
+   {
+    "label": "TurtleBot3",
+    "count": 1,
+    "ids": [
+     "PRJ-VACCINE"
+    ]
+   },
+   {
+    "label": "Unitree Go2",
+    "count": 1,
+    "ids": [
+     "PRJ-CAVE"
+    ]
+   },
+   {
+    "label": "YOLO11n",
+    "count": 1,
+    "ids": [
+     "PRJ-CAVE"
+    ]
+   },
+   {
+    "label": "상태머신(FSM)",
+    "count": 1,
+    "ids": [
+     "PRJ-VACCINE"
+    ]
+   }
+  ],
+  "todo": [
+   {
+    "id": "PRJ-CAVE",
+    "title": "동굴 재난 탐사·조난자 탐지 로봇",
+    "items": [
+     "팀 인원과 내 역할 명칭 확인",
+     "시작월 입력",
+     "시연 영상 첨부 또는 링크 추가"
+    ]
+   },
+   {
+    "id": "PRJ-VACCINE",
+    "title": "병원 백신 배달 로봇",
+    "items": [
+     "시작월 입력",
+     "직접 잰 수치 추가 (배달 1회 소요 시간 등)"
+    ]
+   }
+  ]
  }
 };
