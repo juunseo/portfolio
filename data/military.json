@@ -1,0 +1,22 @@
+[
+  {
+    "id": "MIL-01",
+    "type": "military",
+    "status": "template",
+    "title": "[군별] [병과]",
+    "org": "[소속 부대, 공개 범위 고려해 생략 가능]",
+    "branch": "[육군 / 해군 / 공군 / 해병대 / 사회복무요원]",
+    "rank": "[최종 계급]",
+    "specialty": "[주특기·병과]",
+    "discharge": "[만기전역 / 해당 없음 / 면제]",
+    "period": { "start": "[YYYY-MM]", "end": "[YYYY-MM]", "note": "" },
+    "summary": {
+      "line": "[군별] [최종 계급] [전역 구분] ([YYYY.MM] ~ [YYYY.MM])",
+      "short": ""
+    },
+    "notes": "[직무와 이어지는 복무 경험이 있으면 한 줄. 예: 통신·장비 운용, 정비 경험]",
+    "tags": [],
+    "roles": [],
+    "todo": ["병역 사항 입력. 해당 없음·면제 시 discharge에 사유 기입"]
+  }
+]
