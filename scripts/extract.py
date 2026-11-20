@@ -22,7 +22,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from build import PLACEHOLDER, load_all, norm_tag, ordered_records, period_label  # noqa: E402
+from build import PLACEHOLDER, load_all, norm_tag, ordered_records, period_label, summary_of  # noqa: E402
 
 FILTERED_TYPES = {"project", "research", "award"}
 DETAILS = ("line", "short", "full")
@@ -142,13 +142,15 @@ def contrib_suffix(item: dict, tax: dict) -> str:
 def render_line(w: Writer, rec: dict):
     meta = " · ".join(p for p in (rec.get("org", ""), period_label(rec.get("period"))) if p)
     title = f"**{rec['title']}**" if w.fmt == "md" else rec["title"]
-    w.li(f"{title} ({meta}): {rec['summary']['line']}" if meta else f"{title}: {rec['summary']['line']}")
+    line = summary_of(rec)
+    head = f"{title} ({meta})" if meta else title
+    w.li(f"{head}: {line}" if line else head)
 
 
 def render_project(w: Writer, rec: dict, detail: str, roles: set[str], tax: dict):
     w.h(3, rec["title"])
     w.p(meta_line(rec))
-    w.p(rec["summary"].get("short") or rec["summary"]["line"])
+    w.p(summary_of(rec, "short"))
     if detail == "full":
         if rec.get("problem"):
             w.label("문제")
@@ -202,7 +204,7 @@ def render_project(w: Writer, rec: dict, detail: str, roles: set[str], tax: dict
 def render_generic(w: Writer, rec: dict, detail: str):
     w.h(3, rec["title"])
     w.p(meta_line(rec))
-    w.p(rec["summary"].get("short") or rec["summary"]["line"])
+    w.p(summary_of(rec, "short"))
     for m in rec.get("modules", []):
         hours = f" ({m['hours']}시간)" if m.get("hours") else ""
         detail = m.get("detail", "")
