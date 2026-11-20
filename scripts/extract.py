@@ -297,7 +297,7 @@ def main() -> int:
         sys.exit(f"없는 직무 키: {args.role}")
 
     records, target = select(db, args)
-    if not records:
+    if not records and not args.profile:
         print("조건에 맞는 항목 없음", file=sys.stderr)
         return 1
     text = as_json(records, focus_roles(args, target)) if args.format == "json" else render(db, records, args, target)
