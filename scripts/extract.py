@@ -233,7 +233,14 @@ def render_generic(w: Writer, rec: dict, detail: str):
         w.li("관련 과목: " + ", ".join(rec["courses"]))
     if rec["type"] == "research" and detail == "full":
         for key, name in (("question", "연구 물음"), ("method", "방법"), ("result", "결과"), ("limits", "한계")):
-            w.li(f"{name}: {rec.get(key, '')}")
+            if rec.get(key):
+                w.li(f"{name}: {rec[key]}")
+        for key, name in (("findings", "주요 발견"), ("next", "다음 단계")):
+            if rec.get(key):
+                w.blank()
+                w.label(name)
+                for item in rec[key]:
+                    w.li(item)
     w.blank()
 
 
