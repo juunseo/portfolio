@@ -594,7 +594,7 @@
         }
         const work = pickItems(rec.my_work, roles);
         if (work.length) { w.label("내가 한 일"); work.forEach((i) => w.li(i.text + contribSuffix(i))); w.blank(); }
-        if (rec.results?.length) { w.label("결과"); rec.results.forEach((i) => w.li(i.text)); w.blank(); }
+        if (rec.results?.length) { w.label("결과"); rec.results.forEach((i) => w.li(i.metric && i.text ? `${i.metric}: ${i.text}` : i.metric || i.text)); w.blank(); }
         if (full) {
           if (rec.decisions?.length) { w.label("기술 선택 근거"); rec.decisions.forEach((d) => w.li(`${d.choice}: ${d.reason}`)); w.blank(); }
           const trouble = pickItems(rec.troubleshooting, roles);
