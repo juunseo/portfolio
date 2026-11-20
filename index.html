@@ -20,10 +20,11 @@
       <label class="search">
         <span class="sr-only">검색</span>
         <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"/><path d="m13 13 4 4"/></svg>
-        <input id="q" type="search" placeholder="제목, 기술, 내가 한 일 검색" autocomplete="off">
+        <input id="q" type="search" placeholder="제목, 기술, 내용 검색" autocomplete="off">
       </label>
       <div class="toolbar-actions">
-        <label class="switch"><input type="checkbox" id="show-templates"><span>작성 양식 보기</span></label>
+        <span class="mode-pill" id="mode-pill" hidden>편집 모드</span>
+        <span class="mode-hint" id="mode-hint" hidden>편집하려면 start-editor.bat 실행</span>
         <button type="button" class="btn primary" id="open-extract">이력서 추출 <span class="count" id="sel-count" hidden></span></button>
         <button type="button" class="btn icon" id="theme" aria-label="테마 전환" title="테마 전환"></button>
       </div>
@@ -39,7 +40,6 @@
       </nav>
       <section class="side-block">
         <h2 class="side-title">기술 인덱스</h2>
-        <p class="side-hint">태그를 누르면 그 기술이 쓰인 항목만 표시</p>
         <div class="tag-index" id="tag-index"></div>
       </section>
       <section class="side-block">
@@ -58,6 +58,7 @@
     <div class="wrap" id="foot"></div>
   </footer>
 
+  <!-- 이력서 추출 -->
   <div class="drawer-backdrop" id="drawer-backdrop" hidden></div>
   <aside class="drawer" id="drawer" aria-label="이력서 추출" aria-hidden="true">
     <div class="drawer-head">
@@ -98,6 +99,39 @@
       </div>
     </div>
   </aside>
+
+  <!-- 항목 편집 (편집 모드) -->
+  <div class="drawer-backdrop" id="editor-backdrop" hidden></div>
+  <aside class="drawer editor" id="editor" aria-labelledby="editor-title" aria-hidden="true">
+    <div class="drawer-head">
+      <h2 id="editor-title">편집</h2>
+      <button type="button" class="btn icon" id="editor-close" aria-label="닫기">
+        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 5l10 10M15 5 5 15"/></svg>
+      </button>
+    </div>
+    <form class="drawer-body editor-body" id="editor-form" novalidate></form>
+    <div class="editor-foot">
+      <button type="button" class="btn danger" id="editor-delete">삭제</button>
+      <span class="editor-msg" id="editor-msg" role="status"></span>
+      <button type="button" class="btn" id="editor-cancel">취소</button>
+      <button type="button" class="btn primary" id="editor-save">저장</button>
+    </div>
+  </aside>
+
+  <!-- 사진·영상 크게 보기 -->
+  <dialog class="viewer" id="viewer" aria-label="첨부 보기">
+    <div class="viewer-stage" id="viewer-stage"></div>
+    <p class="viewer-cap" id="viewer-cap"></p>
+    <button type="button" class="viewer-btn prev" id="viewer-prev" aria-label="이전">
+      <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M12.5 4.5 7 10l5.5 5.5"/></svg>
+    </button>
+    <button type="button" class="viewer-btn next" id="viewer-next" aria-label="다음">
+      <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7.5 4.5 13 10l-5.5 5.5"/></svg>
+    </button>
+    <button type="button" class="viewer-btn close" id="viewer-close" aria-label="닫기">
+      <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 5l10 10M15 5 5 15"/></svg>
+    </button>
+  </dialog>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
