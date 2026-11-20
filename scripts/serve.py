@@ -12,8 +12,10 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 import shutil
+import socket
 import sys
 import threading
 import unicodedata
@@ -280,9 +282,21 @@ class Handler(SimpleHTTPRequestHandler):
         return {"type": kind_of(dest.name), "path": rel, "name": dest.name, "size": length}
 
 
+class Server(ThreadingHTTPServer):
+    """Windows에서 이미 쓰는 포트에 겹쳐 붙지 않도록 단독 점유."""
+
+    allow_reuse_address = os.name != "nt"
+    daemon_threads = True
+
+    def server_bind(self):
+        if os.name == "nt" and hasattr(socket, "SO_EXCLUSIVEADDRUSE"):
+            self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_EXCLUSIVEADDRUSE, 1)
+        super().server_bind()
+
+
 def main() -> int:
-    sys.stdout.reconfigure(encoding="utf-8")
-    sys.stderr.reconfigure(encoding="utf-8")
+    sys.stdout.reconfigure(encoding="utf-8", line_buffering=True)
+    sys.stderr.reconfigure(encoding="utf-8", line_buffering=True)
     parser = argparse.ArgumentParser(description="포트폴리오 편집 모드 서버")
     parser.add_argument("--port", type=int, default=8000)
     parser.add_argument("--no-browser", action="store_true")
@@ -298,9 +312,19 @@ def main() -> int:
         return 1
     build.write_dist(db, build.build_index(db))
 
-    server = ThreadingHTTPServer(("127.0.0.1", args.port), Handler)
-    url = f"http://127.0.0.1:{args.port}/"
+    server, port = None, args.port
+    for port in range(args.port, args.port + 10):
+        try:
+            server = Server(("127.0.0.1", port), Handler)
+            break
+        except OSError:
+            continue
+    if server is None:
+        print(f"{args.port}~{args.port + 9}번 포트가 모두 사용 중입니다. --port 옵션으로 다른 번호를 지정해 주세요.")
+        return 1
+    url = f"http://127.0.0.1:{port}/"
     print(f"편집 모드: {url}")
+    print("브라우저가 자동으로 열리지 않으면 위 주소를 직접 열어 주세요.")
     print("끝내려면 이 창에서 Ctrl+C")
     if not args.no_browser:
         threading.Timer(0.6, lambda: webbrowser.open(url)).start()
