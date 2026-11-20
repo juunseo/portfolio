@@ -1,14 +1,8 @@
 # 오준서 포트폴리오
 
-ROS 2 로봇 시뮬레이션에서 자율주행과 인지 파이프라인을 직접 통합해 온 피지컬 AI 연구 지망생.
-목표 직무는 로봇·피지컬 AI 분야 AI 연구원.
+로봇·피지컬 AI 분야 AI 연구원 지망.
 
-| 프로젝트 | 내 역할 | 결과 |
-|---|---|---|
-| [병원 백신 배달 로봇](https://github.com/boseon25/capstone_team3) · ND1 캡스톤 | ROS 2 · Nav2 연동 (6인 팀) | 자연어 명령부터 배달 완료까지 E2E 2개 조합 성공, 픽업 타임아웃 재현 0회 |
-| [동굴 재난 탐사·조난자 탐지 로봇](https://github.com/boseon25/go2-cave-slam-nav2) · ND3 캡스톤 | 자율주행·인지 파이프라인 통합 | 탐지 → 좌표 산출 → 자동 정지 E2E 검증, 조난자 좌표 오차 1m 이내 |
-
-전체 내용은 `index.html`을 브라우저로 열어 확인.
+프로젝트는 내용 검증 후 순차 입력 예정. 전체 내용은 `index.html`을 브라우저로 열어 확인.
 
 ---
 
@@ -33,7 +27,7 @@ portfolio/
 ├─ dist/                 build.py 생성물 (직접 수정 금지)
 │  ├─ index.json         태그·직무·연도·상태별 인덱스
 │  └─ portfolio.js       UI가 읽는 데이터 묶음
-├─ docs/evidence/        근거 자료 (프로젝트 요약 PDF)
+├─ docs/evidence/        공개용 근거 자료 (프로젝트 입력 시 추가)
 └─ scripts/
    ├─ build.py           검증 + 인덱스 생성
    └─ extract.py         이력서·지원서용 텍스트 추출
@@ -68,7 +62,7 @@ python scripts/extract.py --list                                  # ID 목록
 python scripts/extract.py --detail line --profile                 # 전체 한 줄 요약
 python scripts/extract.py --role autonomy --detail full           # 자율주행 직무용 상세
 python scripts/extract.py --tag Nav2,YOLO11n --detail short       # 기술 태그 기준
-python scripts/extract.py --ids PRJ-CAVE --detail full --format txt
+python scripts/extract.py --ids PRJ-01 --detail full --format txt
 python scripts/extract.py --target TGT-HYUNDAI-ROBOTICS --profile --out out/hyundai.md
 ```
 
@@ -117,6 +111,7 @@ python scripts/extract.py --target TGT-HYUNDAI-ROBOTICS --profile --out out/hyun
 ## 원본 자료
 
 캡스톤 원본 폴더(`nd1_capstone_*`, `ND3_*`)는 로컬에만 보관하고 git에서 제외.
-기획서·결과보고서·발표자료·Runbook·시연 영상의 내용은 각 프로젝트의 `materials` 항목에 요약으로 기록하고,
-프로젝트 요약 PDF만 `docs/evidence/`에 수록.
+프로젝트를 입력할 때 원본 자료별 내용은 해당 프로젝트의 `materials`에 요약으로 기록하고,
+공개해도 되는 요약 PDF는 `docs/evidence/`에 두고 `evidence`에 경로를 적음.
+새 프로젝트는 `data/projects.json`의 `PRJ-01` 양식을 복사해 `PRJ-영문이름` ID로 작성.
 비공개 자료(진로 분석 리포트, 동료평가 등)는 `private/` 폴더에 두면 커밋에서 제외됨.
