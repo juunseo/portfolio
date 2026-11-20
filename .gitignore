@@ -1,0 +1,19 @@
+# 추출 결과물
+out/
+
+# 비공개 원본 자료 (진로 분석 리포트, 동료평가 등)
+private/
+
+# 대용량 시연 영상은 링크로 대체
+*.mp4
+*.webm
+*.mov
+
+# 환경
+.env
+__pycache__/
+*.pyc
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
