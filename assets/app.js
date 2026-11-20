@@ -405,7 +405,7 @@
   }
 
   const FIELD_LABELS = {
-    degree: "학위", major: "전공", minor: "복수·부전공", gpa: "학점", branch: "군별", rank: "계급·등급",
+    degree: "학위", major: "전공", minor: "복수·부전공", gpa: "학점", hours: "이수 시간", completion: "수료 여부", branch: "군별", rank: "계급·등급",
     specialty: "주특기", discharge: "전역 구분", notes: "비고", project_ref: "관련 프로젝트", kind: "구분",
     question: "연구 물음", method: "방법", result: "결과", limits: "한계", publication: "발표·게재",
   };
@@ -416,6 +416,7 @@
       .map(([k, label]) => {
         let v = rec[k];
         if (k === "project_ref" && byId[v]) v = `${byId[v].title} (${v})`;
+        if (k === "hours") v = `${v}시간`;
         return `<dt>${esc(label)}</dt><dd>${mark(v)}</dd>`;
       })
       .join("");
@@ -536,6 +537,19 @@
     text() { return this.lines.join("\n").trim() + "\n"; }
   }
 
+  // 섹션별 핵심 정보 한 줄 (scripts/extract.py의 FACTS와 같은 규칙)
+  const FACTS = {
+    education: [["degree", "학위"], ["major", "전공"], ["minor", "복수·부전공"], ["gpa", "학점"]],
+    training: [["hours", "이수 시간"], ["completion", "수료 여부"]],
+    military: [["branch", "군별"], ["rank", "계급"], ["specialty", "주특기"], ["discharge", "전역 구분"]],
+    award: [["rank", "상훈"]],
+  };
+  const factsLine = (rec) =>
+    (FACTS[rec.type] || [])
+      .filter(([k]) => rec[k] !== undefined && rec[k] !== null && rec[k] !== "")
+      .map(([k, label]) => (k === "hours" ? `${label} ${rec[k]}시간` : `${label} ${rec[k]}`))
+      .join(" · ");
+
   const contribSuffix = (item) => ((item.mine || "self") === "self" ? "" : ` (${T.contribution[item.mine]?.label || item.mine})`);
   const metaLine = (rec) => [rec.org, periodLabel(rec.period), teamLabel(rec)].filter(Boolean).join(" · ");
 
@@ -601,6 +615,7 @@
         if (rec.tags?.length) w.p(`기술: ${rec.tags.join(", ")}`);
         if (full && rec.links?.length) w.p(`링크: ${rec.links.map((l) => `${l.label} ${l.url}`).join(" · ")}`);
       } else {
+        w.p(factsLine(rec));
         (rec.modules || []).forEach((m) => w.li(`${m.name}${m.hours ? ` (${m.hours}시간)` : ""}${m.detail ? `: ${m.detail}` : ""}`));
         if (rec.courses?.length) w.li(`관련 과목: ${rec.courses.join(", ")}`);
         if (rec.type === "research" && state.detail === "full") {
@@ -739,17 +754,32 @@
 
   const FIELDS = {
     education: [
-      F.basic, F.title, F.status,
-      { key: "kind", label: "구분", kind: "select", options: [["degree", "학위"], ["training", "교육 이수"]], default: "degree" },
-      F.org, F.period,
-      { key: "degree", label: "학위", kind: "text", placeholder: "학사" },
+      F.basic,
+      { ...F.title, placeholder: "○○대학교 ○○학과" },
+      F.status,
+      { key: "org", label: "학교", kind: "text" },
+      { ...F.period, hint: "입학 ~ 졸업(예정). 비고에 졸업 / 졸업예정 / 재학 / 휴학" },
+      { key: "degree", label: "학위", kind: "text", placeholder: "학사 / 석사 / 고등학교 졸업" },
       { key: "major", label: "전공", kind: "text" },
       { key: "minor", label: "복수·부전공", kind: "text" },
       { key: "gpa", label: "학점", kind: "text", placeholder: "4.0 / 4.5" },
       F.summaryH, F.line, F.short, F.attachments,
-      { kind: "heading", label: "과정·과목" },
-      { key: "courses", label: "관련 과목", kind: "lines", hint: "한 줄에 하나" },
-      { key: "modules", label: "이수 과정", kind: "objlist", addLabel: "과정 추가", sub: [{ key: "name", label: "과정명" }, { key: "hours", label: "시간", kind: "number" }, { key: "detail", label: "내용", wide: true }] },
+      { kind: "heading", label: "이수 과목" },
+      { key: "courses", label: "관련 과목", kind: "lines", hint: "지원 직무와 관련된 과목. 한 줄에 하나" },
+      F.etcH, F.tags, F.roles, F.links, F.todo,
+    ],
+    training: [
+      F.basic,
+      { ...F.title, label: "과정명", placeholder: "○○ 부트캠프, ○○ 교육과정" },
+      F.status,
+      { key: "org", label: "교육 기관", kind: "text" },
+      F.period,
+      { key: "hours", label: "총 이수 시간", kind: "number", hint: "시간 단위 숫자" },
+      { key: "completion", label: "수료 여부", kind: "text", placeholder: "수료 / 이수 중 / 수료증 번호" },
+      F.summaryH, F.line, F.short, F.attachments,
+      { kind: "heading", label: "과정 구성" },
+      { key: "modules", label: "세부 과정", kind: "objlist", addLabel: "세부 과정 추가", sub: [{ key: "name", label: "과정명" }, { key: "hours", label: "시간", kind: "number" }, { key: "detail", label: "내용", wide: true }] },
+      { key: "courses", label: "들은 과목", kind: "lines", hint: "한 줄에 하나" },
       F.etcH, F.tags, F.roles, F.links, F.todo,
     ],
     military: [
@@ -840,7 +870,6 @@
 
   function blankRecord(type) {
     const rec = { id: nextId(type), type, status: "draft", title: "", org: "", period: { start: "", end: "", note: "" }, summary: { line: "", short: "" }, tags: [], roles: [], links: [], attachments: [], todo: [] };
-    if (type === "education") rec.kind = "degree";
     if (type === "project") rec.team = { size: null, my_role: "" };
     return rec;
   }
