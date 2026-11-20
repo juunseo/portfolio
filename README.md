@@ -93,6 +93,7 @@ python scripts/extract.py --target TGT-HYUNDAI-ROBOTICS --profile --out out/hyun
 | `summary.line` | 이력서 표 한 칸에 들어가는 한 문장 |
 | `summary.short` | 자기소개서·요약란용 2~3문장 |
 | `results[].metric` | UI 결과 카드 제목이 되는 짧은 수치 |
+| `materials` | 원본 자료(기획서, 발표자료 등)별 내용 요약. 열람용이며 이력서 추출에는 포함하지 않음 |
 | `priority` | 같은 섹션 안 정렬 우선순위 (클수록 위) |
 | `[작성 필요]` | 대괄호 문구는 빈칸. 빌드가 집계하고, 추출 결과에 남으면 알림 |
 
@@ -113,4 +114,9 @@ python scripts/extract.py --target TGT-HYUNDAI-ROBOTICS --profile --out out/hyun
 | `feature/*` | 데이터·기능 단위 작업 |
 | `apply/<회사>` | 특정 지원처 제출본 보관이 필요할 때 `main`에서 분기 |
 
+## 원본 자료
+
+캡스톤 원본 폴더(`nd1_capstone_*`, `ND3_*`)는 로컬에만 보관하고 git에서 제외.
+기획서·결과보고서·발표자료·Runbook·시연 영상의 내용은 각 프로젝트의 `materials` 항목에 요약으로 기록하고,
+프로젝트 요약 PDF만 `docs/evidence/`에 수록.
 비공개 자료(진로 분석 리포트, 동료평가 등)는 `private/` 폴더에 두면 커밋에서 제외됨.

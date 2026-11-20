@@ -3,6 +3,11 @@ out/
 
 # 비공개 원본 자료 (진로 분석 리포트, 동료평가 등)
 private/
+*동료평가*
+
+# 캡스톤 원본 폴더: 로컬 보관, 내용 요약은 data/projects.json의 materials에 기록
+/nd1_capstone_*/
+/ND3_*/
 
 # 대용량 시연 영상은 링크로 대체
 *.mp4
