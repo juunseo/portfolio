@@ -1,0 +1,30 @@
+[
+  {
+    "id": "TGT-TEMPLATE",
+    "status": "template",
+    "company": "[회사명]",
+    "position": "[공고명]",
+    "deadline": "[YYYY-MM-DD]",
+    "url": "",
+    "products": ["[회사가 파는 제품·서비스 2~3개]"],
+    "metrics": ["[이 직무의 성과를 재는 숫자]"],
+    "keywords": ["[공고 필수·우대 기술 그대로]"],
+    "roles": [],
+    "pitch": "[내 경험과 회사 제품이 닿는 지점 한 줄]",
+    "notes": ""
+  },
+  {
+    "id": "TGT-HYUNDAI-ROBOTICS",
+    "status": "draft",
+    "company": "현대차 로보틱스",
+    "position": "[공고명 확인 필요]",
+    "deadline": "",
+    "url": "",
+    "products": ["착용로봇 엑스블 숄더", "모베드"],
+    "metrics": ["작업 성공률"],
+    "keywords": ["ROS 2", "Nav2", "SLAM", "AMCL", "자율주행", "로봇", "시뮬레이션", "Gazebo"],
+    "roles": ["robotics", "autonomy"],
+    "pitch": "실내 지도 위 자율 이동(병원 배달)과 비정형 지형 주행·인지(동굴 사족보행) 경험을 모베드 같은 이동 플랫폼의 작업 성공률 관점으로 연결",
+    "notes": "AI 커리어 점프업 캠프 워크북의 회사 정리 기준. 지원 전 공고 원문으로 다시 확인"
+  }
+]
