@@ -99,7 +99,11 @@
       { "label": "GitHub 팀 원본 저장소", "url": "https://github.com/boseon25/capstone_team3" },
       { "label": "시연 영상 (Google Drive)", "url": "https://drive.google.com/drive/folders/1dNTDRravAHDpeVM6yv4RLfx1ZmiWcdDK" }
     ],
-    "attachments": [],
+    "attachments": [
+      { "type": "image", "path": "media/PRJ-VACCINE/gazebo-hospital-nav.jpg", "name": "gazebo-hospital-nav.jpg", "size": 159563, "caption": "Gazebo 병원 월드에서 목표 지점으로 이동 중인 TurtleBot3 (파란 영역: LiDAR 스캔)" },
+      { "type": "image", "path": "media/PRJ-VACCINE/llm-planner-log.jpg", "name": "llm-planner-log.jpg", "size": 61957, "caption": "LLM 플래너 로그: '약국에서 약을 가져다 201호 환자에게 전달해줘' → 미션 2건 발행 → 계획 전체 완료" },
+      { "type": "image", "path": "media/PRJ-VACCINE/fsm-done-log.jpg", "name": "fsm-done-log.jpg", "size": 26381, "caption": "상태머신 로그: 이동 성공 → 배치(PLACING) → 미션 완료(DONE) → 계획 전체 완료 2/2" }
+    ],
     "todo": ["시작월 입력", "직접 잰 수치 추가 (배달 1회 소요 시간 등)"]
   },
   {
@@ -201,7 +205,11 @@
       { "label": "GitHub (내 저장소)", "url": "https://github.com/juunseo/go2-cave-slam-nav2" },
       { "label": "GitHub 팀 원본 저장소", "url": "https://github.com/boseon25/go2-cave-slam-nav2" }
     ],
-    "attachments": [],
-    "todo": ["팀 인원과 내 역할 명칭 확인", "시작월 입력", "시연 영상 첨부 또는 링크 추가"]
+    "attachments": [
+      { "type": "image", "path": "media/PRJ-CAVE/survivor-detected-stop.jpg", "name": "survivor-detected-stop.jpg", "size": 246564, "caption": "조난자 탐지 후 자동 정지 (신뢰도 0.90, 최근접 거리 0.97 m)" },
+      { "type": "image", "path": "media/PRJ-CAVE/amcl-nav2-navigation.jpg", "name": "amcl-nav2-navigation.jpg", "size": 256616, "caption": "저장 지도 + AMCL 위치추정 기반 Nav2 목표점 자율주행 (RViz 경로 표시)" },
+      { "type": "image", "path": "media/PRJ-CAVE/slam-nav2-yolo-overview.jpg", "name": "slam-nav2-yolo-overview.jpg", "size": 81579, "caption": "발표자료 중 주요 기술 요약: SLAM 맵 생성, Nav2 경로 찾기, YOLO 조난자 탐지" }
+    ],
+    "todo": ["팀 인원과 내 역할 명칭 확인", "시작월 입력"]
   }
 ]
