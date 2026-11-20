@@ -508,6 +508,210 @@ window.PORTFOLIO = {
     "시작월 입력",
     "직접 잰 수치 추가 (배달 1회 소요 시간 등)"
    ]
+  },
+  {
+   "id": "RES-SO101-PAPER",
+   "type": "research",
+   "status": "draft",
+   "priority": 30,
+   "kind": "개인 연구 · 논문 준비 (진행 중)",
+   "title": "조명 변화에 강한 VLA 추론: 추론 시점 액션 청크 보정",
+   "org": "개인 연구 · SO-ARM101 실물 로봇",
+   "period": {
+    "start": "2026-11",
+    "end": "",
+    "note": "진행 중"
+   },
+   "summary": {
+    "line": "기본 조명에서 학습한 VLA 정책이 조명이 바뀌어도 같은 액션 청크를 내도록, 재학습 없이 추론 시점에 보정하는 방법을 찾는 논문 준비 연구",
+    "short": "조명 변화 → 이미지 토큰 변화 → 액션 청크 흔들림을 학습 데이터 확대가 아닌 추론 시점에서 다루는 접근. 선행 조건인 '기본 조명에서 지시색을 정확히 고르는 정책'을 위해 삼중 수집 방식을 설계하고, 같은 실물 데이터로 SmolVLA와 GR00T N1.7의 내부 어텐션 비교."
+   },
+   "question": "학습 때와 다른 조명에서도 추론 시점 보정만으로 기본 조명에서 성공했던 액션 청크를 되찾을 수 있는가.",
+   "method": "삼중 수집(같은 장면·위치·조명에서 세 색을 한 번씩 시연, 장면마다 색 순서 섞음)으로 실물 데이터 수집. 블록 색 × 조명 조건 × (지시색 선택 정확도, 파지 성공률) 3축 실험 설계, 솔루션 적용 전후 비교 예정. 카메라 노출 고정·화이트밸런스 자동. 선행 연구 SALT를 기준 방법으로 분석하고, 백본 셀프 어텐션·액션 헤드 결합/크로스 어텐션 맵을 실시간으로 시각화해 모델 내부 비교.",
+   "result": "실물 120 에피소드(색별 40). SmolVLA는 파지 모두 성공, 지시색 선택 대부분 실패. 같은 데이터로 학습한 GR00T N1.7은 지시색 선택·파지 모두 거의 100%. 어텐션 맵 비교로 SmolVLA는 백본 단계부터 지시색을 놓치고 액션 헤드가 세 색 블록을 동시에 참조한다는 점 확인.",
+   "limits": "조명 조건(실험 y축) 미확정, 솔루션 적용 전 단계. 평가 횟수와 성공률 집계 기준 정리 필요.",
+   "findings": [
+    "SmolVLA 실패 가설: 지시문을 쓰지 못하면 삼중 데이터는 한 장면에 정답 궤적이 3개인 다봉 분포가 되고, flow matching 정책이 초기 노이즈로 그중 하나를 골라 수행. 파지는 정확하지만 색 선택은 사실상 무작위",
+    "GR00T N1.7이 앞선 구조적 이유 분석: 파라미터 약 7배, 백본 뒤 vl_self_attention 4블록에서 이미지·지시문 토큰을 다시 섞고, 액션 헤드가 텍스트·이미지 KV를 따로 크로스 어텐션해 지시 신호 유지",
+    "SALT 분석: 아직 실행하지 않은 액션 청크(leftover)를 목표로 액션 헤드 attention key 투영의 배율을 추론 중 갱신. 교란이 에피소드 시작부터 있으면 효과가 작고, 재계획마다 지연 증가 (SmolVLA 기준 약 135ms → 559ms)"
+   ],
+   "next": [
+    "베이스 모델 결정 (SmolVLA / GR00T N1.7)",
+    "조명 조건 확정 후 솔루션 적용 전후 비교 실험"
+   ],
+   "publication": "",
+   "tags": [
+    "SO-ARM101",
+    "VLA",
+    "SmolVLA",
+    "GR00T N1.7",
+    "LeRobot",
+    "Test-time adaptation",
+    "어텐션 분석",
+    "Python"
+   ],
+   "roles": [
+    "research",
+    "robotics",
+    "eval"
+   ],
+   "links": [
+    {
+     "label": "블로그: SO-ARM 101 논문",
+     "url": "https://blog.naver.com/dhcjsxor321/224433307306"
+    },
+    {
+     "label": "참고: SALT (arXiv 2610.07946)",
+     "url": "https://arxiv.org/abs/2610.07946"
+    },
+    {
+     "label": "참고: SmolVLA (arXiv 2506.01844)",
+     "url": "https://arxiv.org/abs/2506.01844"
+    }
+   ],
+   "attachments": [],
+   "todo": [
+    "실물 평가 횟수 기록 (GR00T '거의 100%'의 시행 수)",
+    "어텐션 맵 이미지 첨부",
+    "논문 제출처·일정 입력"
+   ]
+  },
+  {
+   "id": "RES-SO101-SIM2REAL",
+   "type": "research",
+   "status": "draft",
+   "priority": 20,
+   "kind": "개인 연구 (진행 중)",
+   "title": "SO-ARM101 색상 Pick & Place: 시뮬레이션 데이터 기반 VLA 학습과 실패 원인 진단",
+   "org": "개인 연구 · Isaac Lab 시뮬레이션",
+   "period": {
+    "start": "2026-06",
+    "end": "",
+    "note": "진행 중"
+   },
+   "summary": {
+    "line": "Isaac Lab에서 만든 시연 데이터로 VLA 정책(SmolVLA, GR00T N1.7)을 학습해 SO-ARM101이 지시한 색의 물체를 같은 색 상자에 넣도록 하는 sim-to-real 연구",
+    "short": "실물 시연 데이터 수집 비용을 줄이려고 시뮬레이터에서 도메인 랜덤화한 데이터를 만드는 과정 기록. 색 인지·파지 실패의 원인을 가설 → 검증 실험 → 기각 순서로 좁혀, 모델 구조보다 데이터 수집 방식에서 생기는 숏컷 학습이 핵심이라는 결론 도출."
+   },
+   "question": "VLA 정책이 언어 지시의 색을 보고 목표 물체를 고르게 하려면 무엇이 필요한가. 시뮬레이션 데이터로 이를 학습시킬 수 있는가.",
+   "method": "SO-ARM101 리더암 텔레오퍼레이션으로 Isaac Lab 가상 환경에서 시연 수집(손목·상단 카메라 2대, RGB·depth·segmentation 영상 + 관절 6축). 조명(HDRI)·물체 색·위치 도메인 랜덤화. SmolVLA·GR00T N1.7 파인튜닝(RTX 5070 로컬, A100 서버). 원인 진단을 위해 VLM 백본 질의, 백본 출력 선형 프로브, 보조 헤드 유무 비교, 반사실 지시문 테스트 수행.",
+   "result": "153 에피소드(68,772 프레임, 색별 51) 시뮬레이션 데이터 구축. SmolVLA는 그리퍼 개폐는 학습했지만 빨강 지시 실측 1/8 성공, 색 재설계 후 재학습에서도 10% 미만. 백본 프로브로 지시색 블록 위치 74% 적중을 확인해 원인 범위를 정책 쪽으로 축소. 같은 장면에서 지시문만 바꾸는 3묶음 수집으로 바꾸자 GR00T 정책의 색 인지 문제 해소(영상 확인, 성공률 미측정).",
+   "limits": "성공률은 10회 단위 평가 위주로 체계적 측정 전. 시뮬레이션 단독 결과라 실물 성능은 별도 확인 필요. 물체 위치 범위를 바꾸면 일반화 성능 저하.",
+   "findings": [
+    "초기 실물 30 + 시뮬 30 에피소드 혼합 학습 실패로 sim-to-real 격차 확인",
+    "카메라 오프셋은 오일러 각 수동 입력으로 9cm 오차 발생, 시뮬레이터 prim의 로컬 트랜스폼을 읽어 쿼터니언으로 쓰는 방식으로 해결",
+    "GR00T N1.7(3B)에 30 에피소드 파인튜닝 시 그리퍼 개폐 미학습, 데이터 규모 부족으로 진단하고 SmolVLA(약 450M)로 전환",
+    "'물체가 비전 토큰 한 칸보다 작다'는 가설(큐브 35×13px, 토큰 1개 = 64×64px)을 크롭·해상도 상향과 백본 질의 실험으로 기각",
+    "색을 왜곡하는 조명 3종을 빼고 HDRI 21종 채택, 기존 액션을 그대로 쓰는 재렌더링 파이프라인 구축 (오차 큰 7개 제외 146 에피소드)",
+    "에피소드당 약 450프레임 중 언어가 필요한 결정은 한 번뿐이라 액션 손실에서 언어 신호가 묻히는 구조 확인",
+    "검출기 마스크를 정책 입력에 넣으면 언어 접지 검증이 무의미해지고 보조 손실과 충돌한다고 판단해 마스킹 방식 철회",
+    "보조 헤드 유무 비교에서 둘 다 색 인지 정상, 보조 헤드 가설 기각. 원인을 데이터 수집 방식에서 생기는 숏컷 학습으로 결론"
+   ],
+   "next": [
+    "실물 데이터 수집과 실물·시뮬레이션 데이터 통합",
+    "숏컷 학습을 줄이는 데이터 수집 방식 정리 (RES-SO101-PAPER로 연결)"
+   ],
+   "publication": "",
+   "tags": [
+    "SO-ARM101",
+    "Isaac Sim",
+    "Isaac Lab",
+    "LeRobot",
+    "SmolVLA",
+    "GR00T N1.7",
+    "VLA",
+    "Sim-to-Real",
+    "도메인 랜덤화",
+    "Python"
+   ],
+   "roles": [
+    "research",
+    "robotics",
+    "eval"
+   ],
+   "links": [
+    {
+     "label": "블로그: Sim to real So-arm 101",
+     "url": "https://blog.naver.com/dhcjsxor321/224400031657"
+    },
+    {
+     "label": "참고: Robust Skills, Brittle Grounding (arXiv 2602.24143)",
+     "url": "https://arxiv.org/abs/2602.24143"
+    },
+    {
+     "label": "참고: OBEYED-VLA (arXiv 2512.22519)",
+     "url": "https://arxiv.org/abs/2512.22519"
+    }
+   ],
+   "attachments": [],
+   "todo": [
+    "프로브 74%의 지표 정의 입력 (예: 오차 몇 cm 이내 비율)",
+    "평가 회차별 성공률 표 정리",
+    "실험 영상·그래프 첨부"
+   ]
+  },
+  {
+   "id": "RES-MYCOBOT",
+   "type": "research",
+   "status": "draft",
+   "priority": 10,
+   "kind": "개인 연구·실물 배포 워크숍 (진행 중)",
+   "title": "myCobot 280 텔레오퍼레이션: MuJoCo 연동과 조이스틱 제어 튜닝",
+   "org": "개인 연구 · myCobot 280 M5Stack",
+   "period": {
+    "start": "2026-10",
+    "end": "",
+    "note": "진행 중"
+   },
+   "summary": {
+    "line": "myCobot 280을 MuJoCo 시뮬레이터와 연동하고, AI 학습용 시연 데이터를 끊김 없이 모을 수 있도록 조이스틱 텔레오퍼레이션 제어를 실측으로 튜닝",
+    "short": "공식 URDF를 실제 구성(카메라 플랜지 + 어댑티브 그리퍼)에 맞춰 MuJoCo와 실물을 실시간 연동. 조종 지연을 줄이려고 조이스틱 입력으로 바꾸고 명령 방식·전송 주기·서보 속도·PID를 측정하며 조정해 시연 데이터 수집 기반 마련."
+   },
+   "question": "보급형 로봇팔로 VLA 학습에 쓸 시연 데이터를 끊김·떨림 없이 수집하려면 어떤 제어 설정이 필요한가.",
+   "method": "공식 mycobot_ros2의 URDF·메시를 실제 구성에 맞게 수정해 MuJoCo 연동(관절 한계 일치). pymycobot으로 실물 제어, 조이스틱 매핑(J1~J6, 그리퍼, 비상 정지). 응답 대기 없는 set_encoders_drag와 펌웨어 jog 명령 방식 비교, 관절별 서보 최저 속도 측정, 관절별 PID D값 조정.",
+   "result": "set_encoders_drag 30Hz 스트리밍 + 보간 펌웨어 모드 + 목표 제한 ±8°로 매끄러운 추종. J1~J3 서보가 약 26°/s 아래로 내려가지 않는 것을 측정해 조이스틱 속도를 30°/s로 고정. 카메라·그리퍼로 앞쪽이 무거워 생기던 떨림을 J2·J3 D값 8 → 16으로 완화. 펌웨어 jog 방식은 관절이 멈추지 않는 폭주 위험으로 제외.",
+   "limits": "질량·토크 파라미터 미보정(관절 한계만 일치), 시뮬레이션 화면 추종 지연 일부 남음. 데이터 수집·학습 단계 전.",
+   "findings": [
+    "LeRobot은 펌웨어를 거치지 않고 서보에 바로 명령해 지연이 적고, myCobot은 펌웨어를 거쳐 명령 방식 선택이 지연을 좌우함",
+    "J5는 D값을 낮춰 봤다가 공장값(25)으로 되돌림"
+   ],
+   "next": [
+    "조이스틱으로 시연 데이터 수집",
+    "AI 학습·추론과 실물 배포"
+   ],
+   "publication": "",
+   "tags": [
+    "myCobot 280",
+    "MuJoCo",
+    "pymycobot",
+    "텔레오퍼레이션",
+    "PID 튜닝",
+    "Python",
+    "Ubuntu 24.04"
+   ],
+   "roles": [
+    "robotics",
+    "research"
+   ],
+   "links": [
+    {
+     "label": "블로그: Mycobot 280 m5 stack robot arm",
+     "url": "https://blog.naver.com/dhcjsxor321/224440638595"
+    },
+    {
+     "label": "공식 mycobot_ros2",
+     "url": "https://github.com/elephantrobotics/mycobot_ros2"
+    },
+    {
+     "label": "공식 pymycobot",
+     "url": "https://github.com/elephantrobotics/pymycobot"
+    }
+   ],
+   "attachments": [],
+   "todo": [
+    "질량·토크 보정 후 시뮬레이션-실물 오차 측정",
+    "텔레오퍼레이션 영상 첨부"
+   ]
   }
  ],
  "targets": [
@@ -571,7 +775,7 @@ window.PORTFOLIO = {
    "military": 0,
    "award": 0,
    "project": 2,
-   "research": 0
+   "research": 3
   },
   "attachments": 0,
   "records": [
@@ -653,6 +857,84 @@ window.PORTFOLIO = {
     ],
     "attachments": 0,
     "gaps": 2
+   },
+   {
+    "id": "RES-SO101-PAPER",
+    "type": "research",
+    "status": "draft",
+    "title": "조명 변화에 강한 VLA 추론: 추론 시점 액션 청크 보정",
+    "org": "개인 연구 · SO-ARM101 실물 로봇",
+    "period": "2026.11 ~ (진행 중)",
+    "line": "기본 조명에서 학습한 VLA 정책이 조명이 바뀌어도 같은 액션 청크를 내도록, 재학습 없이 추론 시점에 보정하는 방법을 찾는 논문 준비 연구",
+    "tags": [
+     "SO-ARM101",
+     "VLA",
+     "SmolVLA",
+     "GR00T N1.7",
+     "LeRobot",
+     "Test-time adaptation",
+     "어텐션 분석",
+     "Python"
+    ],
+    "roles": [
+     "research",
+     "robotics",
+     "eval"
+    ],
+    "attachments": 0,
+    "gaps": 3
+   },
+   {
+    "id": "RES-SO101-SIM2REAL",
+    "type": "research",
+    "status": "draft",
+    "title": "SO-ARM101 색상 Pick & Place: 시뮬레이션 데이터 기반 VLA 학습과 실패 원인 진단",
+    "org": "개인 연구 · Isaac Lab 시뮬레이션",
+    "period": "2026.06 ~ (진행 중)",
+    "line": "Isaac Lab에서 만든 시연 데이터로 VLA 정책(SmolVLA, GR00T N1.7)을 학습해 SO-ARM101이 지시한 색의 물체를 같은 색 상자에 넣도록 하는 sim-to-real 연구",
+    "tags": [
+     "SO-ARM101",
+     "Isaac Sim",
+     "Isaac Lab",
+     "LeRobot",
+     "SmolVLA",
+     "GR00T N1.7",
+     "VLA",
+     "Sim-to-Real",
+     "도메인 랜덤화",
+     "Python"
+    ],
+    "roles": [
+     "research",
+     "robotics",
+     "eval"
+    ],
+    "attachments": 0,
+    "gaps": 3
+   },
+   {
+    "id": "RES-MYCOBOT",
+    "type": "research",
+    "status": "draft",
+    "title": "myCobot 280 텔레오퍼레이션: MuJoCo 연동과 조이스틱 제어 튜닝",
+    "org": "개인 연구 · myCobot 280 M5Stack",
+    "period": "2026.10 ~ (진행 중)",
+    "line": "myCobot 280을 MuJoCo 시뮬레이터와 연동하고, AI 학습용 시연 데이터를 끊김 없이 모을 수 있도록 조이스틱 텔레오퍼레이션 제어를 실측으로 튜닝",
+    "tags": [
+     "myCobot 280",
+     "MuJoCo",
+     "pymycobot",
+     "텔레오퍼레이션",
+     "PID 튜닝",
+     "Python",
+     "Ubuntu 24.04"
+    ],
+    "roles": [
+     "robotics",
+     "research"
+    ],
+    "attachments": 0,
+    "gaps": 2
    }
   ],
   "by_type": {
@@ -666,13 +948,24 @@ window.PORTFOLIO = {
     "PRJ-CAVE",
     "PRJ-VACCINE"
    ],
-   "research": []
+   "research": [
+    "RES-SO101-PAPER",
+    "RES-SO101-SIM2REAL",
+    "RES-MYCOBOT"
+   ]
   },
   "by_role": {
-   "research": [],
+   "research": [
+    "RES-SO101-PAPER",
+    "RES-SO101-SIM2REAL",
+    "RES-MYCOBOT"
+   ],
    "robotics": [
     "PRJ-CAVE",
-    "PRJ-VACCINE"
+    "PRJ-VACCINE",
+    "RES-SO101-PAPER",
+    "RES-SO101-SIM2REAL",
+    "RES-MYCOBOT"
    ],
    "autonomy": [
     "PRJ-CAVE",
@@ -686,7 +979,9 @@ window.PORTFOLIO = {
    ],
    "eval": [
     "PRJ-CAVE",
-    "PRJ-VACCINE"
+    "PRJ-VACCINE",
+    "RES-SO101-PAPER",
+    "RES-SO101-SIM2REAL"
    ]
   },
   "by_status": {
@@ -695,7 +990,10 @@ window.PORTFOLIO = {
    ],
    "draft": [
     "PRJ-CAVE",
-    "PRJ-VACCINE"
+    "PRJ-VACCINE",
+    "RES-SO101-PAPER",
+    "RES-SO101-SIM2REAL",
+    "RES-MYCOBOT"
    ],
    "template": []
   },
@@ -703,7 +1001,10 @@ window.PORTFOLIO = {
    "2026": [
     "EDU-01",
     "PRJ-CAVE",
-    "PRJ-VACCINE"
+    "PRJ-VACCINE",
+    "RES-SO101-PAPER",
+    "RES-SO101-SIM2REAL",
+    "RES-MYCOBOT"
    ]
   },
   "by_tag": {
@@ -722,16 +1023,37 @@ window.PORTFOLIO = {
      "PRJ-VACCINE"
     ]
    },
+   "gr00tn17": {
+    "label": "GR00T N1.7",
+    "ids": [
+     "RES-SO101-PAPER",
+     "RES-SO101-SIM2REAL"
+    ]
+   },
    "groqapi": {
     "label": "Groq API",
     "ids": [
      "PRJ-VACCINE"
     ]
    },
+   "isaaclab": {
+    "label": "Isaac Lab",
+    "ids": [
+     "RES-SO101-SIM2REAL"
+    ]
+   },
    "isaacsim": {
     "label": "isaacsim",
     "ids": [
-     "EDU-01"
+     "EDU-01",
+     "RES-SO101-SIM2REAL"
+    ]
+   },
+   "lerobot": {
+    "label": "LeRobot",
+    "ids": [
+     "RES-SO101-PAPER",
+     "RES-SO101-SIM2REAL"
     ]
    },
    "lidar": {
@@ -750,7 +1072,14 @@ window.PORTFOLIO = {
    "mujoco": {
     "label": "Mujoco",
     "ids": [
-     "EDU-01"
+     "EDU-01",
+     "RES-MYCOBOT"
+    ]
+   },
+   "mycobot280": {
+    "label": "myCobot 280",
+    "ids": [
+     "RES-MYCOBOT"
     ]
    },
    "nav2": {
@@ -760,12 +1089,27 @@ window.PORTFOLIO = {
      "PRJ-VACCINE"
     ]
    },
+   "pid튜닝": {
+    "label": "PID 튜닝",
+    "ids": [
+     "RES-MYCOBOT"
+    ]
+   },
+   "pymycobot": {
+    "label": "pymycobot",
+    "ids": [
+     "RES-MYCOBOT"
+    ]
+   },
    "python": {
     "label": "Python",
     "ids": [
      "EDU-01",
      "PRJ-CAVE",
-     "PRJ-VACCINE"
+     "PRJ-VACCINE",
+     "RES-SO101-PAPER",
+     "RES-SO101-SIM2REAL",
+     "RES-MYCOBOT"
     ]
    },
    "rgbd": {
@@ -782,6 +1126,12 @@ window.PORTFOLIO = {
      "PRJ-VACCINE"
     ]
    },
+   "simtoreal": {
+    "label": "Sim-to-Real",
+    "ids": [
+     "RES-SO101-SIM2REAL"
+    ]
+   },
    "simulation": {
     "label": "simulation",
     "ids": [
@@ -794,10 +1144,36 @@ window.PORTFOLIO = {
      "PRJ-CAVE"
     ]
    },
+   "smolvla": {
+    "label": "SmolVLA",
+    "ids": [
+     "RES-SO101-PAPER",
+     "RES-SO101-SIM2REAL"
+    ]
+   },
+   "soarm101": {
+    "label": "SO-ARM101",
+    "ids": [
+     "RES-SO101-PAPER",
+     "RES-SO101-SIM2REAL"
+    ]
+   },
+   "testtimeadaptation": {
+    "label": "Test-time adaptation",
+    "ids": [
+     "RES-SO101-PAPER"
+    ]
+   },
    "turtlebot3": {
     "label": "TurtleBot3",
     "ids": [
      "PRJ-VACCINE"
+    ]
+   },
+   "ubuntu2404": {
+    "label": "Ubuntu 24.04",
+    "ids": [
+     "RES-MYCOBOT"
     ]
    },
    "unitreego2": {
@@ -809,7 +1185,9 @@ window.PORTFOLIO = {
    "vla": {
     "label": "VLA",
     "ids": [
-     "EDU-01"
+     "EDU-01",
+     "RES-SO101-PAPER",
+     "RES-SO101-SIM2REAL"
     ]
    },
    "yolo11n": {
@@ -818,25 +1196,46 @@ window.PORTFOLIO = {
      "PRJ-CAVE"
     ]
    },
+   "도메인랜덤화": {
+    "label": "도메인 랜덤화",
+    "ids": [
+     "RES-SO101-SIM2REAL"
+    ]
+   },
    "상태머신fsm": {
     "label": "상태머신(FSM)",
     "ids": [
      "PRJ-VACCINE"
     ]
+   },
+   "어텐션분석": {
+    "label": "어텐션 분석",
+    "ids": [
+     "RES-SO101-PAPER"
+    ]
+   },
+   "텔레오퍼레이션": {
+    "label": "텔레오퍼레이션",
+    "ids": [
+     "RES-MYCOBOT"
+    ]
    }
   },
   "skills": [
    {
-    "label": "Gazebo",
-    "count": 3,
+    "label": "Python",
+    "count": 6,
     "ids": [
      "EDU-01",
      "PRJ-CAVE",
-     "PRJ-VACCINE"
+     "PRJ-VACCINE",
+     "RES-SO101-PAPER",
+     "RES-SO101-SIM2REAL",
+     "RES-MYCOBOT"
     ]
    },
    {
-    "label": "Python",
+    "label": "Gazebo",
     "count": 3,
     "ids": [
      "EDU-01",
@@ -854,11 +1253,44 @@ window.PORTFOLIO = {
     ]
    },
    {
+    "label": "VLA",
+    "count": 3,
+    "ids": [
+     "EDU-01",
+     "RES-SO101-PAPER",
+     "RES-SO101-SIM2REAL"
+    ]
+   },
+   {
     "label": "AMCL",
     "count": 2,
     "ids": [
      "PRJ-CAVE",
      "PRJ-VACCINE"
+    ]
+   },
+   {
+    "label": "GR00T N1.7",
+    "count": 2,
+    "ids": [
+     "RES-SO101-PAPER",
+     "RES-SO101-SIM2REAL"
+    ]
+   },
+   {
+    "label": "isaacsim",
+    "count": 2,
+    "ids": [
+     "EDU-01",
+     "RES-SO101-SIM2REAL"
+    ]
+   },
+   {
+    "label": "LeRobot",
+    "count": 2,
+    "ids": [
+     "RES-SO101-PAPER",
+     "RES-SO101-SIM2REAL"
     ]
    },
    {
@@ -870,11 +1302,35 @@ window.PORTFOLIO = {
     ]
    },
    {
+    "label": "Mujoco",
+    "count": 2,
+    "ids": [
+     "EDU-01",
+     "RES-MYCOBOT"
+    ]
+   },
+   {
     "label": "Nav2",
     "count": 2,
     "ids": [
      "PRJ-CAVE",
      "PRJ-VACCINE"
+    ]
+   },
+   {
+    "label": "SmolVLA",
+    "count": 2,
+    "ids": [
+     "RES-SO101-PAPER",
+     "RES-SO101-SIM2REAL"
+    ]
+   },
+   {
+    "label": "SO-ARM101",
+    "count": 2,
+    "ids": [
+     "RES-SO101-PAPER",
+     "RES-SO101-SIM2REAL"
     ]
    },
    {
@@ -885,10 +1341,10 @@ window.PORTFOLIO = {
     ]
    },
    {
-    "label": "isaacsim",
+    "label": "Isaac Lab",
     "count": 1,
     "ids": [
-     "EDU-01"
+     "RES-SO101-SIM2REAL"
     ]
    },
    {
@@ -899,10 +1355,24 @@ window.PORTFOLIO = {
     ]
    },
    {
-    "label": "Mujoco",
+    "label": "myCobot 280",
     "count": 1,
     "ids": [
-     "EDU-01"
+     "RES-MYCOBOT"
+    ]
+   },
+   {
+    "label": "PID 튜닝",
+    "count": 1,
+    "ids": [
+     "RES-MYCOBOT"
+    ]
+   },
+   {
+    "label": "pymycobot",
+    "count": 1,
+    "ids": [
+     "RES-MYCOBOT"
     ]
    },
    {
@@ -910,6 +1380,13 @@ window.PORTFOLIO = {
     "count": 1,
     "ids": [
      "PRJ-CAVE"
+    ]
+   },
+   {
+    "label": "Sim-to-Real",
+    "count": 1,
+    "ids": [
+     "RES-SO101-SIM2REAL"
     ]
    },
    {
@@ -927,10 +1404,24 @@ window.PORTFOLIO = {
     ]
    },
    {
+    "label": "Test-time adaptation",
+    "count": 1,
+    "ids": [
+     "RES-SO101-PAPER"
+    ]
+   },
+   {
     "label": "TurtleBot3",
     "count": 1,
     "ids": [
      "PRJ-VACCINE"
+    ]
+   },
+   {
+    "label": "Ubuntu 24.04",
+    "count": 1,
+    "ids": [
+     "RES-MYCOBOT"
     ]
    },
    {
@@ -941,13 +1432,6 @@ window.PORTFOLIO = {
     ]
    },
    {
-    "label": "VLA",
-    "count": 1,
-    "ids": [
-     "EDU-01"
-    ]
-   },
-   {
     "label": "YOLO11n",
     "count": 1,
     "ids": [
@@ -955,10 +1439,31 @@ window.PORTFOLIO = {
     ]
    },
    {
+    "label": "도메인 랜덤화",
+    "count": 1,
+    "ids": [
+     "RES-SO101-SIM2REAL"
+    ]
+   },
+   {
     "label": "상태머신(FSM)",
     "count": 1,
     "ids": [
      "PRJ-VACCINE"
+    ]
+   },
+   {
+    "label": "어텐션 분석",
+    "count": 1,
+    "ids": [
+     "RES-SO101-PAPER"
+    ]
+   },
+   {
+    "label": "텔레오퍼레이션",
+    "count": 1,
+    "ids": [
+     "RES-MYCOBOT"
     ]
    }
   ],
@@ -978,6 +1483,32 @@ window.PORTFOLIO = {
     "items": [
      "시작월 입력",
      "직접 잰 수치 추가 (배달 1회 소요 시간 등)"
+    ]
+   },
+   {
+    "id": "RES-SO101-PAPER",
+    "title": "조명 변화에 강한 VLA 추론: 추론 시점 액션 청크 보정",
+    "items": [
+     "실물 평가 횟수 기록 (GR00T '거의 100%'의 시행 수)",
+     "어텐션 맵 이미지 첨부",
+     "논문 제출처·일정 입력"
+    ]
+   },
+   {
+    "id": "RES-SO101-SIM2REAL",
+    "title": "SO-ARM101 색상 Pick & Place: 시뮬레이션 데이터 기반 VLA 학습과 실패 원인 진단",
+    "items": [
+     "프로브 74%의 지표 정의 입력 (예: 오차 몇 cm 이내 비율)",
+     "평가 회차별 성공률 표 정리",
+     "실험 영상·그래프 첨부"
+    ]
+   },
+   {
+    "id": "RES-MYCOBOT",
+    "title": "myCobot 280 텔레오퍼레이션: MuJoCo 연동과 조이스틱 제어 튜닝",
+    "items": [
+     "질량·토크 보정 후 시뮬레이션-실물 오차 측정",
+     "텔레오퍼레이션 영상 첨부"
     ]
    }
   ]

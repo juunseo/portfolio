@@ -424,6 +424,12 @@
       .map((m) => `<li><b>${esc(m.name || "")}</b>${m.hours ? ` <span class="muted">${m.hours}시간</span>` : ""}${m.detail ? `<br><span class="muted">${mark(m.detail)}</span>` : ""}</li>`)
       .join("");
     const courses = (rec.courses || []).length ? `<p class="prose"><b>관련 과목</b> ${rec.courses.map(mark).join(", ")}</p>` : "";
+    const findings = rec.findings?.length
+      ? `<details class="more"><summary>주요 발견 <span class="muted">${rec.findings.length}</span></summary><ul class="bullets block">${rec.findings.map((l) => `<li>${mark(l)}</li>`).join("")}</ul></details>`
+      : "";
+    const nextSteps = rec.next?.length
+      ? `<details class="more"><summary>다음 단계</summary><ul class="bullets block">${rec.next.map((l) => `<li>${mark(l)}</li>`).join("")}</ul></details>`
+      : "";
     return `
       <article class="card ${rec.type} ${rec.status}${state.selected.has(rec.id) ? " is-selected" : ""}" id="${esc(rec.id)}">
         ${cardTop(rec)}
@@ -434,6 +440,8 @@
         ${fields ? `<dl class="fields">${fields}</dl>` : ""}
         ${modules ? `<section class="block"><h4 class="block-title">이수 과정</h4><ul class="bullets">${modules}</ul></section>` : ""}
         ${courses}
+        ${findings}
+        ${nextSteps}
         ${filesHTML(rec)}
         ${tagRow(rec)}
         ${linksRow(rec)}
@@ -620,6 +628,8 @@
         if (rec.courses?.length) w.li(`관련 과목: ${rec.courses.join(", ")}`);
         if (rec.type === "research" && state.detail === "full") {
           [["question", "연구 물음"], ["method", "방법"], ["result", "결과"], ["limits", "한계"]].forEach(([k, n]) => rec[k] && w.li(`${n}: ${rec[k]}`));
+          if (rec.findings?.length) { w.blank(); w.label("주요 발견"); rec.findings.forEach((l) => w.li(l)); }
+          if (rec.next?.length) { w.blank(); w.label("다음 단계"); rec.next.forEach((l) => w.li(l)); }
         }
         w.blank();
       }
@@ -831,6 +841,8 @@
       { key: "method", label: "방법", kind: "textarea", rows: 3 },
       { key: "result", label: "결과", kind: "textarea", rows: 3 },
       { key: "limits", label: "한계", kind: "textarea", rows: 2 },
+      { key: "findings", label: "주요 발견", kind: "lines", rows: 5, hint: "실험·가설 검증에서 얻은 것. 한 줄에 하나" },
+      { key: "next", label: "다음 단계", kind: "lines", hint: "한 줄에 하나" },
       { key: "publication", label: "발표·게재", kind: "text" },
       F.etcH, F.tags, F.roles, F.links, F.todo,
     ],
