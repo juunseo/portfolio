@@ -2,6 +2,7 @@
   "generated": "2026-11-20",
   "counts": {
     "education": 0,
+    "training": 0,
     "military": 0,
     "award": 0,
     "project": 0,
@@ -11,6 +12,7 @@
   "records": [],
   "by_type": {
     "education": [],
+    "training": [],
     "military": [],
     "award": [],
     "project": [],

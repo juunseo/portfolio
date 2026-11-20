@@ -1,10 +1,11 @@
 {
   "types": {
-    "education": { "label": "학력·교육", "prefix": "EDU", "file": "education.json", "order": 1 },
-    "military": { "label": "병역", "prefix": "MIL", "file": "military.json", "order": 2 },
-    "award": { "label": "수상", "prefix": "AWD", "file": "awards.json", "order": 3 },
-    "project": { "label": "프로젝트", "prefix": "PRJ", "file": "projects.json", "order": 4 },
-    "research": { "label": "연구", "prefix": "RES", "file": "research.json", "order": 5 }
+    "education": { "label": "학력", "prefix": "EDU", "file": "education.json", "order": 1 },
+    "training": { "label": "교육", "prefix": "TRN", "file": "training.json", "order": 2 },
+    "military": { "label": "병역", "prefix": "MIL", "file": "military.json", "order": 3 },
+    "award": { "label": "수상", "prefix": "AWD", "file": "awards.json", "order": 4 },
+    "project": { "label": "프로젝트", "prefix": "PRJ", "file": "projects.json", "order": 5 },
+    "research": { "label": "연구", "prefix": "RES", "file": "research.json", "order": 6 }
   },
   "roles": {
     "research": { "label": "AI 연구원", "desc": "연구 물음 설정, 실험 설계, 기존 방법 대비 비교와 재현" },

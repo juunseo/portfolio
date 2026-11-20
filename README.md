@@ -18,7 +18,8 @@ portfolio/
 ├─ assets/               화면 스타일·스크립트
 ├─ data/                 원천 DB
 │  ├─ profile.json       이름, 소개, 목표 직무, 연락처
-│  ├─ education.json     학력·교육
+│  ├─ education.json     학력 (학교·학위·전공·학점)
+│  ├─ training.json      교육 (부트캠프·교육 과정, 이수 시간, 수료 여부)
 │  ├─ military.json      병역
 │  ├─ awards.json        수상
 │  ├─ projects.json      프로젝트
@@ -107,7 +108,7 @@ python scripts/extract.py --target TGT-HYUNDAI-ROBOTICS --profile --out out/hyun
 | `--format` | `md` · `txt` · `json` |
 | `--strict` | `confirmed`(확정) 항목만 사용 |
 
-학력·병역은 직무·태그·지원처 필터와 관계없이 항상 포함. `out/`은 git에서 제외.
+학력·교육·병역은 직무·태그·지원처 필터와 관계없이 항상 포함. `out/`은 git에서 제외.
 
 ### 5. JSON 직접 수정 (선택)
 
@@ -122,7 +123,7 @@ python scripts/build.py --check  # 검증만
 
 | 필드 | 규칙 |
 |---|---|
-| `id` | `EDU-` `MIL-` `AWD-` `PRJ-` `RES-` `TGT-` 접두어 + 영문 대문자·숫자. 저장 후에는 바꾸지 않음 (첨부 폴더 이름, 지원 기록과 연결되는 키) |
+| `id` | `EDU-`(학력) `TRN-`(교육) `MIL-` `AWD-` `PRJ-` `RES-` `TGT-` 접두어 + 영문 대문자·숫자. 저장 후에는 바꾸지 않음 (첨부 폴더 이름, 지원 기록과 연결되는 키) |
 | `status` | `draft` 보완 필요 · `confirmed` 확정 (이력서에 바로 사용) |
 | `roles` | `research` AI 연구원 · `robotics` 로봇 AI 엔지니어 · `autonomy` 자율주행·내비게이션 · `vision` 비전·인식 · `llm` LLM 응용 · `eval` AI 평가·검증 |
 | `summary.line` | 이력서 표 한 칸에 들어가는 한 문장 |

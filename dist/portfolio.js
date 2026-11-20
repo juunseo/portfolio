@@ -27,34 +27,40 @@ window.PORTFOLIO = {
  "taxonomy": {
   "types": {
    "education": {
-    "label": "학력·교육",
+    "label": "학력",
     "prefix": "EDU",
     "file": "education.json",
     "order": 1
+   },
+   "training": {
+    "label": "교육",
+    "prefix": "TRN",
+    "file": "training.json",
+    "order": 2
    },
    "military": {
     "label": "병역",
     "prefix": "MIL",
     "file": "military.json",
-    "order": 2
+    "order": 3
    },
    "award": {
     "label": "수상",
     "prefix": "AWD",
     "file": "awards.json",
-    "order": 3
+    "order": 4
    },
    "project": {
     "label": "프로젝트",
     "prefix": "PRJ",
     "file": "projects.json",
-    "order": 4
+    "order": 5
    },
    "research": {
     "label": "연구",
     "prefix": "RES",
     "file": "research.json",
-    "order": 5
+    "order": 6
    }
   },
   "roles": {
@@ -170,6 +176,7 @@ window.PORTFOLIO = {
   "generated": "2026-11-20",
   "counts": {
    "education": 0,
+   "training": 0,
    "military": 0,
    "award": 0,
    "project": 0,
@@ -179,6 +186,7 @@ window.PORTFOLIO = {
   "records": [],
   "by_type": {
    "education": [],
+   "training": [],
    "military": [],
    "award": [],
    "project": [],

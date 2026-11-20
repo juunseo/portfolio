@@ -11,7 +11,7 @@
 
 규칙
     - status가 template인 항목은 항상 제외, --strict면 confirmed만 사용
-    - --role / --tag / --target 필터는 프로젝트·연구·수상에만 적용 (학력·병역은 기본 이력으로 유지)
+    - --role / --tag / --target 필터는 프로젝트·연구·수상에만 적용 (학력·교육·병역은 기본 이력으로 유지)
     - mine이 team인 항목(팀원 담당)은 추출에서 제외
 """
 from __future__ import annotations
@@ -26,6 +26,24 @@ from build import PLACEHOLDER, load_all, norm_tag, ordered_records, period_label
 
 FILTERED_TYPES = {"project", "research", "award"}
 DETAILS = ("line", "short", "full")
+
+# 섹션별로 요약 아래 한 줄로 붙이는 핵심 정보
+FACTS = {
+    "education": [("degree", "학위"), ("major", "전공"), ("minor", "복수·부전공"), ("gpa", "학점")],
+    "training": [("hours", "이수 시간"), ("completion", "수료 여부")],
+    "military": [("branch", "군별"), ("rank", "계급"), ("specialty", "주특기"), ("discharge", "전역 구분")],
+    "award": [("rank", "상훈")],
+}
+
+
+def facts_line(rec: dict) -> str:
+    parts = []
+    for key, label in FACTS.get(rec["type"], []):
+        value = rec.get(key)
+        if value in (None, ""):
+            continue
+        parts.append(f"{label} {value}시간" if key == "hours" else f"{label} {value}")
+    return " · ".join(parts)
 
 
 # ---------- 선택 ----------
@@ -205,10 +223,11 @@ def render_generic(w: Writer, rec: dict, detail: str):
     w.h(3, rec["title"])
     w.p(meta_line(rec))
     w.p(summary_of(rec, "short"))
+    w.p(facts_line(rec))
     for m in rec.get("modules", []):
         hours = f" ({m['hours']}시간)" if m.get("hours") else ""
-        detail = m.get("detail", "")
-        w.li(f"{m['name']}{hours}: {detail}" if detail else f"{m['name']}{hours}")
+        note = m.get("detail", "")
+        w.li(f"{m['name']}{hours}: {note}" if note else f"{m['name']}{hours}")
     if rec.get("courses"):
         w.li("관련 과목: " + ", ".join(rec["courses"]))
     if rec["type"] == "research" and detail == "full":
@@ -278,7 +297,7 @@ def main() -> int:
     p = argparse.ArgumentParser(description="이력서·지원서용 텍스트 추출")
     p.add_argument("--list", action="store_true", help="ID 목록 출력")
     p.add_argument("--ids", help="쉼표로 구분한 ID (입력 순서 유지)")
-    p.add_argument("--type", help="education,military,award,project,research 중 쉼표 구분")
+    p.add_argument("--type", help="education,training,military,award,project,research 중 쉼표 구분")
     p.add_argument("--role", help="직무 키 (research, robotics, autonomy, vision, llm, eval)")
     p.add_argument("--tag", help="기술 태그, 쉼표 구분 (하나라도 맞으면 포함)")
     p.add_argument("--target", help="data/targets.json의 지원처 ID")
