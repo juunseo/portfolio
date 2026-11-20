@@ -316,7 +316,11 @@ window.PORTFOLIO = {
    ],
    "links": [
     {
-     "label": "GitHub 저장소",
+     "label": "GitHub (내 저장소)",
+     "url": "https://github.com/juunseo/go2-cave-slam-nav2"
+    },
+    {
+     "label": "GitHub 팀 원본 저장소",
      "url": "https://github.com/boseon25/go2-cave-slam-nav2"
     }
    ],
@@ -495,7 +499,11 @@ window.PORTFOLIO = {
    ],
    "links": [
     {
-     "label": "GitHub 팀 저장소",
+     "label": "GitHub (내 저장소)",
+     "url": "https://github.com/juunseo/capstone_team3"
+    },
+    {
+     "label": "GitHub 팀 원본 저장소",
      "url": "https://github.com/boseon25/capstone_team3"
     },
     {
