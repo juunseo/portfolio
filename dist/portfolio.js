@@ -639,6 +639,10 @@ window.PORTFOLIO = {
    ],
    "links": [
     {
+     "label": "GitHub (내 저장소)",
+     "url": "https://github.com/juunseo/Sim-to-Real-SO-101-Workshop"
+    },
+    {
      "label": "블로그: Sim to real So-arm 101",
      "url": "https://blog.naver.com/dhcjsxor321/224400031657"
     },
@@ -653,6 +657,7 @@ window.PORTFOLIO = {
    ],
    "attachments": [],
    "todo": [
+    "GitHub 저장소 공개 전환 (2026-11-20 확인 시 외부 접근 불가)",
     "프로브 74%의 지표 정의 입력 (예: 오차 몇 cm 이내 비율)",
     "평가 회차별 성공률 표 정리",
     "실험 영상·그래프 첨부"
@@ -703,6 +708,10 @@ window.PORTFOLIO = {
    ],
    "links": [
     {
+     "label": "GitHub (내 저장소)",
+     "url": "https://github.com/juunseo/my_cobot280"
+    },
+    {
      "label": "블로그: Mycobot 280 m5 stack robot arm",
      "url": "https://blog.naver.com/dhcjsxor321/224440638595"
     },
@@ -717,6 +726,7 @@ window.PORTFOLIO = {
    ],
    "attachments": [],
    "todo": [
+    "GitHub 저장소 공개 전환 (2026-11-20 확인 시 외부 접근 불가)",
     "질량·토크 보정 후 시뮬레이션-실물 오차 측정",
     "텔레오퍼레이션 영상 첨부"
    ]
@@ -918,7 +928,7 @@ window.PORTFOLIO = {
      "eval"
     ],
     "attachments": 0,
-    "gaps": 3
+    "gaps": 4
    },
    {
     "id": "RES-MYCOBOT",
@@ -942,7 +952,7 @@ window.PORTFOLIO = {
      "research"
     ],
     "attachments": 0,
-    "gaps": 2
+    "gaps": 3
    }
   ],
   "by_type": {
@@ -1506,6 +1516,7 @@ window.PORTFOLIO = {
     "id": "RES-SO101-SIM2REAL",
     "title": "SO-ARM101 색상 Pick & Place: 시뮬레이션 데이터 기반 VLA 학습과 실패 원인 진단",
     "items": [
+     "GitHub 저장소 공개 전환 (2026-11-20 확인 시 외부 접근 불가)",
      "프로브 74%의 지표 정의 입력 (예: 오차 몇 cm 이내 비율)",
      "평가 회차별 성공률 표 정리",
      "실험 영상·그래프 첨부"
@@ -1515,6 +1526,7 @@ window.PORTFOLIO = {
     "id": "RES-MYCOBOT",
     "title": "myCobot 280 텔레오퍼레이션: MuJoCo 연동과 조이스틱 제어 튜닝",
     "items": [
+     "GitHub 저장소 공개 전환 (2026-11-20 확인 시 외부 접근 불가)",
      "질량·토크 보정 후 시뮬레이션-실물 오차 측정",
      "텔레오퍼레이션 영상 첨부"
     ]
