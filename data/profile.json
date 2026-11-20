@@ -1,23 +1,21 @@
 {
   "name": "오준서",
-  "name_en": "[작성 필요: 영문 이름]",
-  "headline": "로봇·피지컬 AI 분야 AI 연구원 지망",
+  "name_en": "Oh jun seo",
+  "headline": "Robot manipulation 및  자율주행 모빌리티 연구 학부생",
   "target_roles": [
     "research",
-    "robotics"
-  ],
-  "interest_roles": [
-    "eval",
+    "robotics",
     "autonomy"
   ],
+  "interest_roles": [],
   "target_industries": [
     "로봇·피지컬 AI",
     "모빌리티·자율주행"
   ],
   "contact": {
-    "email": "[작성 필요]",
+    "email": "jhss4262@gmail.com",
     "github": "juunseo",
-    "blog": ""
+    "blog": "https://blog.naver.com/dhcjsxor321"
   },
   "intro": [],
   "updated": "2026-11-20"

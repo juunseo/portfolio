@@ -2,24 +2,22 @@
 window.PORTFOLIO = {
  "profile": {
   "name": "오준서",
-  "name_en": "[작성 필요: 영문 이름]",
-  "headline": "로봇·피지컬 AI 분야 AI 연구원 지망",
+  "name_en": "Oh jun seo",
+  "headline": "Robot manipulation 및  자율주행 모빌리티 연구 학부생",
   "target_roles": [
    "research",
-   "robotics"
-  ],
-  "interest_roles": [
-   "eval",
+   "robotics",
    "autonomy"
   ],
+  "interest_roles": [],
   "target_industries": [
    "로봇·피지컬 AI",
    "모빌리티·자율주행"
   ],
   "contact": {
-   "email": "[작성 필요]",
+   "email": "jhss4262@gmail.com",
    "github": "juunseo",
-   "blog": ""
+   "blog": "https://blog.naver.com/dhcjsxor321"
   },
   "intro": [],
   "updated": "2026-11-20"
@@ -119,6 +117,41 @@ window.PORTFOLIO = {
   }
  },
  "records": [
+  {
+   "id": "EDU-01",
+   "type": "education",
+   "status": "confirmed",
+   "title": "기본 학력사항",
+   "org": "전주대학교",
+   "period": {
+    "start": "2022-03",
+    "end": "2026-11",
+    "note": "재학 중"
+   },
+   "summary": {
+    "line": "",
+    "short": ""
+   },
+   "tags": [
+    "ROS2",
+    "Python",
+    "isaacsim",
+    "simulation",
+    "Gazebo",
+    "Mujoco",
+    "VLA",
+    "LLM"
+   ],
+   "roles": [],
+   "links": [],
+   "attachments": [],
+   "todo": [],
+   "degree": "학사",
+   "major": "인공지능학과",
+   "minor": "",
+   "gpa": "4.33",
+   "courses": []
+  },
   {
    "id": "PRJ-CAVE",
    "type": "project",
@@ -533,7 +566,7 @@ window.PORTFOLIO = {
  "index": {
   "generated": "2026-11-20",
   "counts": {
-   "education": 0,
+   "education": 1,
    "training": 0,
    "military": 0,
    "award": 0,
@@ -542,6 +575,28 @@ window.PORTFOLIO = {
   },
   "attachments": 0,
   "records": [
+   {
+    "id": "EDU-01",
+    "type": "education",
+    "status": "confirmed",
+    "title": "기본 학력사항",
+    "org": "전주대학교",
+    "period": "2022.03 ~ 2026.11 (재학 중)",
+    "line": "",
+    "tags": [
+     "ROS2",
+     "Python",
+     "isaacsim",
+     "simulation",
+     "Gazebo",
+     "Mujoco",
+     "VLA",
+     "LLM"
+    ],
+    "roles": [],
+    "attachments": 0,
+    "gaps": 0
+   },
    {
     "id": "PRJ-CAVE",
     "type": "project",
@@ -601,7 +656,9 @@ window.PORTFOLIO = {
    }
   ],
   "by_type": {
-   "education": [],
+   "education": [
+    "EDU-01"
+   ],
    "training": [],
    "military": [],
    "award": [],
@@ -633,7 +690,9 @@ window.PORTFOLIO = {
    ]
   },
   "by_status": {
-   "confirmed": [],
+   "confirmed": [
+    "EDU-01"
+   ],
    "draft": [
     "PRJ-CAVE",
     "PRJ-VACCINE"
@@ -642,6 +701,7 @@ window.PORTFOLIO = {
   },
   "by_year": {
    "2026": [
+    "EDU-01",
     "PRJ-CAVE",
     "PRJ-VACCINE"
    ]
@@ -657,6 +717,7 @@ window.PORTFOLIO = {
    "gazebo": {
     "label": "Gazebo",
     "ids": [
+     "EDU-01",
      "PRJ-CAVE",
      "PRJ-VACCINE"
     ]
@@ -665,6 +726,12 @@ window.PORTFOLIO = {
     "label": "Groq API",
     "ids": [
      "PRJ-VACCINE"
+    ]
+   },
+   "isaacsim": {
+    "label": "isaacsim",
+    "ids": [
+     "EDU-01"
     ]
    },
    "lidar": {
@@ -676,7 +743,14 @@ window.PORTFOLIO = {
    "llm": {
     "label": "LLM",
     "ids": [
+     "EDU-01",
      "PRJ-VACCINE"
+    ]
+   },
+   "mujoco": {
+    "label": "Mujoco",
+    "ids": [
+     "EDU-01"
     ]
    },
    "nav2": {
@@ -689,6 +763,7 @@ window.PORTFOLIO = {
    "python": {
     "label": "Python",
     "ids": [
+     "EDU-01",
      "PRJ-CAVE",
      "PRJ-VACCINE"
     ]
@@ -700,10 +775,17 @@ window.PORTFOLIO = {
     ]
    },
    "ros2": {
-    "label": "ROS 2",
+    "label": "ROS2",
     "ids": [
+     "EDU-01",
      "PRJ-CAVE",
      "PRJ-VACCINE"
+    ]
+   },
+   "simulation": {
+    "label": "simulation",
+    "ids": [
+     "EDU-01"
     ]
    },
    "slam": {
@@ -724,6 +806,12 @@ window.PORTFOLIO = {
      "PRJ-CAVE"
     ]
    },
+   "vla": {
+    "label": "VLA",
+    "ids": [
+     "EDU-01"
+    ]
+   },
    "yolo11n": {
     "label": "YOLO11n",
     "ids": [
@@ -739,6 +827,33 @@ window.PORTFOLIO = {
   },
   "skills": [
    {
+    "label": "Gazebo",
+    "count": 3,
+    "ids": [
+     "EDU-01",
+     "PRJ-CAVE",
+     "PRJ-VACCINE"
+    ]
+   },
+   {
+    "label": "Python",
+    "count": 3,
+    "ids": [
+     "EDU-01",
+     "PRJ-CAVE",
+     "PRJ-VACCINE"
+    ]
+   },
+   {
+    "label": "ROS2",
+    "count": 3,
+    "ids": [
+     "EDU-01",
+     "PRJ-CAVE",
+     "PRJ-VACCINE"
+    ]
+   },
+   {
     "label": "AMCL",
     "count": 2,
     "ids": [
@@ -747,31 +862,15 @@ window.PORTFOLIO = {
     ]
    },
    {
-    "label": "Gazebo",
+    "label": "LLM",
     "count": 2,
     "ids": [
-     "PRJ-CAVE",
+     "EDU-01",
      "PRJ-VACCINE"
     ]
    },
    {
     "label": "Nav2",
-    "count": 2,
-    "ids": [
-     "PRJ-CAVE",
-     "PRJ-VACCINE"
-    ]
-   },
-   {
-    "label": "Python",
-    "count": 2,
-    "ids": [
-     "PRJ-CAVE",
-     "PRJ-VACCINE"
-    ]
-   },
-   {
-    "label": "ROS 2",
     "count": 2,
     "ids": [
      "PRJ-CAVE",
@@ -786,6 +885,13 @@ window.PORTFOLIO = {
     ]
    },
    {
+    "label": "isaacsim",
+    "count": 1,
+    "ids": [
+     "EDU-01"
+    ]
+   },
+   {
     "label": "LiDAR",
     "count": 1,
     "ids": [
@@ -793,10 +899,10 @@ window.PORTFOLIO = {
     ]
    },
    {
-    "label": "LLM",
+    "label": "Mujoco",
     "count": 1,
     "ids": [
-     "PRJ-VACCINE"
+     "EDU-01"
     ]
    },
    {
@@ -804,6 +910,13 @@ window.PORTFOLIO = {
     "count": 1,
     "ids": [
      "PRJ-CAVE"
+    ]
+   },
+   {
+    "label": "simulation",
+    "count": 1,
+    "ids": [
+     "EDU-01"
     ]
    },
    {
@@ -825,6 +938,13 @@ window.PORTFOLIO = {
     "count": 1,
     "ids": [
      "PRJ-CAVE"
+    ]
+   },
+   {
+    "label": "VLA",
+    "count": 1,
+    "ids": [
+     "EDU-01"
     ]
    },
    {

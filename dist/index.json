@@ -1,7 +1,7 @@
 {
   "generated": "2026-11-20",
   "counts": {
-    "education": 0,
+    "education": 1,
     "training": 0,
     "military": 0,
     "award": 0,
@@ -10,6 +10,28 @@
   },
   "attachments": 0,
   "records": [
+    {
+      "id": "EDU-01",
+      "type": "education",
+      "status": "confirmed",
+      "title": "기본 학력사항",
+      "org": "전주대학교",
+      "period": "2022.03 ~ 2026.11 (재학 중)",
+      "line": "",
+      "tags": [
+        "ROS2",
+        "Python",
+        "isaacsim",
+        "simulation",
+        "Gazebo",
+        "Mujoco",
+        "VLA",
+        "LLM"
+      ],
+      "roles": [],
+      "attachments": 0,
+      "gaps": 0
+    },
     {
       "id": "PRJ-CAVE",
       "type": "project",
@@ -69,7 +91,9 @@
     }
   ],
   "by_type": {
-    "education": [],
+    "education": [
+      "EDU-01"
+    ],
     "training": [],
     "military": [],
     "award": [],
@@ -101,7 +125,9 @@
     ]
   },
   "by_status": {
-    "confirmed": [],
+    "confirmed": [
+      "EDU-01"
+    ],
     "draft": [
       "PRJ-CAVE",
       "PRJ-VACCINE"
@@ -110,6 +136,7 @@
   },
   "by_year": {
     "2026": [
+      "EDU-01",
       "PRJ-CAVE",
       "PRJ-VACCINE"
     ]
@@ -125,6 +152,7 @@
     "gazebo": {
       "label": "Gazebo",
       "ids": [
+        "EDU-01",
         "PRJ-CAVE",
         "PRJ-VACCINE"
       ]
@@ -133,6 +161,12 @@
       "label": "Groq API",
       "ids": [
         "PRJ-VACCINE"
+      ]
+    },
+    "isaacsim": {
+      "label": "isaacsim",
+      "ids": [
+        "EDU-01"
       ]
     },
     "lidar": {
@@ -144,7 +178,14 @@
     "llm": {
       "label": "LLM",
       "ids": [
+        "EDU-01",
         "PRJ-VACCINE"
+      ]
+    },
+    "mujoco": {
+      "label": "Mujoco",
+      "ids": [
+        "EDU-01"
       ]
     },
     "nav2": {
@@ -157,6 +198,7 @@
     "python": {
       "label": "Python",
       "ids": [
+        "EDU-01",
         "PRJ-CAVE",
         "PRJ-VACCINE"
       ]
@@ -168,10 +210,17 @@
       ]
     },
     "ros2": {
-      "label": "ROS 2",
+      "label": "ROS2",
       "ids": [
+        "EDU-01",
         "PRJ-CAVE",
         "PRJ-VACCINE"
+      ]
+    },
+    "simulation": {
+      "label": "simulation",
+      "ids": [
+        "EDU-01"
       ]
     },
     "slam": {
@@ -192,6 +241,12 @@
         "PRJ-CAVE"
       ]
     },
+    "vla": {
+      "label": "VLA",
+      "ids": [
+        "EDU-01"
+      ]
+    },
     "yolo11n": {
       "label": "YOLO11n",
       "ids": [
@@ -207,6 +262,33 @@
   },
   "skills": [
     {
+      "label": "Gazebo",
+      "count": 3,
+      "ids": [
+        "EDU-01",
+        "PRJ-CAVE",
+        "PRJ-VACCINE"
+      ]
+    },
+    {
+      "label": "Python",
+      "count": 3,
+      "ids": [
+        "EDU-01",
+        "PRJ-CAVE",
+        "PRJ-VACCINE"
+      ]
+    },
+    {
+      "label": "ROS2",
+      "count": 3,
+      "ids": [
+        "EDU-01",
+        "PRJ-CAVE",
+        "PRJ-VACCINE"
+      ]
+    },
+    {
       "label": "AMCL",
       "count": 2,
       "ids": [
@@ -215,31 +297,15 @@
       ]
     },
     {
-      "label": "Gazebo",
+      "label": "LLM",
       "count": 2,
       "ids": [
-        "PRJ-CAVE",
+        "EDU-01",
         "PRJ-VACCINE"
       ]
     },
     {
       "label": "Nav2",
-      "count": 2,
-      "ids": [
-        "PRJ-CAVE",
-        "PRJ-VACCINE"
-      ]
-    },
-    {
-      "label": "Python",
-      "count": 2,
-      "ids": [
-        "PRJ-CAVE",
-        "PRJ-VACCINE"
-      ]
-    },
-    {
-      "label": "ROS 2",
       "count": 2,
       "ids": [
         "PRJ-CAVE",
@@ -254,6 +320,13 @@
       ]
     },
     {
+      "label": "isaacsim",
+      "count": 1,
+      "ids": [
+        "EDU-01"
+      ]
+    },
+    {
       "label": "LiDAR",
       "count": 1,
       "ids": [
@@ -261,10 +334,10 @@
       ]
     },
     {
-      "label": "LLM",
+      "label": "Mujoco",
       "count": 1,
       "ids": [
-        "PRJ-VACCINE"
+        "EDU-01"
       ]
     },
     {
@@ -272,6 +345,13 @@
       "count": 1,
       "ids": [
         "PRJ-CAVE"
+      ]
+    },
+    {
+      "label": "simulation",
+      "count": 1,
+      "ids": [
+        "EDU-01"
       ]
     },
     {
@@ -293,6 +373,13 @@
       "count": 1,
       "ids": [
         "PRJ-CAVE"
+      ]
+    },
+    {
+      "label": "VLA",
+      "count": 1,
+      "ids": [
+        "EDU-01"
       ]
     },
     {
